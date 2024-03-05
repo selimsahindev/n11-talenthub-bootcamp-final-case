@@ -2,6 +2,7 @@ package com.selimsahin.userservice.model.entity.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 
 import java.time.LocalDateTime;
 
@@ -22,4 +23,10 @@ public abstract class Auditable {
 
     @Column(name = "updated_by")
     private Long updatedBy;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 }

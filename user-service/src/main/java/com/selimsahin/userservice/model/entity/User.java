@@ -27,6 +27,6 @@ public class User extends Auditable {
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     private Location location;
 }
