@@ -4,6 +4,7 @@ import com.selimsahin.userservice.dto.Location;
 import com.selimsahin.userservice.dto.UserCreateRequest;
 import com.selimsahin.userservice.dto.UserResponse;
 import com.selimsahin.userservice.entity.User;
+import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.repository.UserRepository;
 import com.selimsahin.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,6 @@ public class UserServiceImpl implements UserService {
     public UserResponse createUser(UserCreateRequest request) {
 
         User user = mapUserCreateRequestToUser(request);
-
-        System.out.println("User: " + userRepository.save(user));
-
         return mapToUserResponse(userRepository.save(user));
     }
 
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found with ID: " + id);
         }
 
         return mapToUserResponse(userOptional.get());
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found with ID: " + id);
         }
 
         User user = userOptional.get();
