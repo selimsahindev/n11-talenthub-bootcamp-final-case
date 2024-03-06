@@ -1,12 +1,10 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.LocationDetailDTO;
+import com.selimsahin.userservice.dto.Location;
 import com.selimsahin.userservice.dto.UserCreateRequest;
 import com.selimsahin.userservice.dto.UserResponse;
-import com.selimsahin.userservice.entity.Location;
 import com.selimsahin.userservice.entity.User;
 import com.selimsahin.userservice.repository.UserRepository;
-import com.selimsahin.userservice.service.LocationService;
 import com.selimsahin.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,25 +22,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final LocationService locationService;
 
     @Override
     public UserResponse createUser(UserCreateRequest request) {
 
-        // Create user
         User user = mapUserCreateRequestToUser(request);
 
-        // Create location
-        LocationDetailDTO locationDetailDTO = Location.mapLocationToLocationDetailDTO(request.getLocation());
-        Location location = Location.mapLocationDetailDTOToLocation(locationDetailDTO);
+        System.out.println("User: " + userRepository.save(user));
 
-        // Set location for user
-        user.setLocation(location);
-
-        // Save user
-        user = userRepository.save(user);
-
-        return mapToUserResponse(user);
+        return mapToUserResponse(userRepository.save(user));
     }
 
     @Override
@@ -94,6 +82,8 @@ public class UserServiceImpl implements UserService {
         user.setName(request.getName());
         user.setSurname(request.getSurname());
         user.setEmail(request.getEmail());
+        user.setLocation(request.getLocation());
+        user.setStatus(request.getStatus());
         return user;
     }
 
@@ -103,6 +93,7 @@ public class UserServiceImpl implements UserService {
         userResponse.setName(user.getName());
         userResponse.setSurname(user.getSurname());
         userResponse.setEmail(user.getEmail());
+        userResponse.setLocation(user.getLocation());
         return userResponse;
     }
 }

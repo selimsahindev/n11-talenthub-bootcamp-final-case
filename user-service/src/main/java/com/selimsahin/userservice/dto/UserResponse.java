@@ -1,6 +1,5 @@
 package com.selimsahin.userservice.dto;
 
-import com.selimsahin.userservice.entity.Location;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +14,4 @@ public class UserResponse {
     private String surname;
     private String email;
     private Location location;
-
 }

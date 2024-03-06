@@ -1,11 +1,8 @@
 package com.selimsahin.userservice.dto;
 
-import com.selimsahin.userservice.enums.Gender;
 import com.selimsahin.userservice.enums.UserStatus;
-import com.selimsahin.userservice.entity.Location;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,12 +30,7 @@ public class UserCreateRequest {
     @Length(max = 100, message = "Email can not be longer than 100 characters.")
     private String email;
 
-    @NotNull(message = "Gender is required.")
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     @NotNull(message = "Location is required.")
-    @Valid // This annotation is used to validate the nested object
     private Location location;
 
     @NotNull(message = "Status is required.")
