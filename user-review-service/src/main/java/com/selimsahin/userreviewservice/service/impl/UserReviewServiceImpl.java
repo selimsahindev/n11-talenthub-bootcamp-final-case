@@ -45,7 +45,7 @@ public class UserReviewServiceImpl implements UserReviewService {
         Optional<UserReview> userReviewOptional = userReviewRepository.findById(id);
 
         if (userReviewOptional.isEmpty()) {
-            throw new UserReviewNotFoundException("User review not found with ID: " + id);
+            throw new UserReviewNotFoundException("User review not found with id: " + id);
         }
 
         return mapUserReviewToUserReviewDetailDTO(userReviewOptional.get());
@@ -57,7 +57,7 @@ public class UserReviewServiceImpl implements UserReviewService {
         Optional<List<UserReview>> userReviewsOptional = userReviewRepository.findAllByUserId(userId);
 
         if (userReviewsOptional.isEmpty() || userReviewsOptional.get().isEmpty()) {
-            throw new UserReviewNotFoundException("User review not found with user ID: " + userId);
+            throw new UserReviewNotFoundException("User review not found with user id: " + userId);
         }
 
         return userReviewsOptional.get().stream()

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    UserResponse createUser(UserCreateRequest request);
+    void createUser(UserCreateRequest request);
 
     List<UserResponse> getAllUsers(int page, int limit);
 

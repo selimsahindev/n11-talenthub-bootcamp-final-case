@@ -1,6 +1,5 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.Location;
 import com.selimsahin.userservice.dto.UserCreateRequest;
 import com.selimsahin.userservice.dto.UserResponse;
 import com.selimsahin.userservice.entity.User;
@@ -25,10 +24,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserResponse createUser(UserCreateRequest request) {
+    public void createUser(UserCreateRequest request) {
 
         User user = mapUserCreateRequestToUser(request);
-        return mapToUserResponse(userRepository.save(user));
+        userRepository.save(user);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found with ID: " + id);
+            throw new UserNotFoundException("User not found with id: " + id);
         }
 
         return mapToUserResponse(userOptional.get());
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found with ID: " + id);
+            throw new UserNotFoundException("User not found with id: " + id);
         }
 
         User user = userOptional.get();
