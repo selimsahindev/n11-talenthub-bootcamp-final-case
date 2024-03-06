@@ -1,4 +1,4 @@
-package com.selimsahin.userservice.entity;
+package com.selimsahin.restaurantservice.dto;
 
 /**
  * @author selimsahindev
