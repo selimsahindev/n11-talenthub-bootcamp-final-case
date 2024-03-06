@@ -4,12 +4,14 @@ import com.selimsahin.userreviewservice.dto.UserReviewCreateRequest;
 import com.selimsahin.userreviewservice.dto.UserReviewDetailDTO;
 import com.selimsahin.userreviewservice.entity.UserReview;
 import com.selimsahin.userreviewservice.enums.UserRating;
+import com.selimsahin.userreviewservice.exception.UserReviewNotFoundException;
 import com.selimsahin.userreviewservice.repository.UserReviewRepository;
 import com.selimsahin.userreviewservice.service.UserReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author selimsahindev
@@ -39,12 +41,28 @@ public class UserReviewServiceImpl implements UserReviewService {
 
     @Override
     public UserReviewDetailDTO findById(Long id) {
-        return null;
+
+        Optional<UserReview> userReviewOptional = userReviewRepository.findById(id);
+
+        if (userReviewOptional.isEmpty()) {
+            throw new UserReviewNotFoundException("User review not found with ID: " + id);
+        }
+
+        return mapUserReviewToUserReviewDetailDTO(userReviewOptional.get());
     }
 
     @Override
     public List<UserReviewDetailDTO> findAllByUserId(Long userId) {
-        return null;
+
+        Optional<List<UserReview>> userReviewsOptional = userReviewRepository.findAllByUserId(userId);
+
+        if (userReviewsOptional.isEmpty() || userReviewsOptional.get().isEmpty()) {
+            throw new UserReviewNotFoundException("User review not found with user ID: " + userId);
+        }
+
+        return userReviewsOptional.get().stream()
+                .map(this::mapUserReviewToUserReviewDetailDTO)
+                .toList();
     }
 
     // TODO: Use MapStruct and get rid of these methods

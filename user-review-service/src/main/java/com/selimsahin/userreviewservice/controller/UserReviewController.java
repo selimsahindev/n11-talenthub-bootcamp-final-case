@@ -28,6 +28,11 @@ public class UserReviewController {
         return ResponseEntity.ok(userReviewService.findById(id));
     }
 
+    @GetMapping("/by-user")
+    public ResponseEntity<Iterable<UserReviewDetailDTO>> findAllByUserId(@RequestParam Long userId) {
+        return ResponseEntity.ok(userReviewService.findAllByUserId(userId));
+    }
+
     @PostMapping
     public ResponseEntity<Void> createUserReview(@RequestBody @Valid UserReviewCreateRequest request) {
 
