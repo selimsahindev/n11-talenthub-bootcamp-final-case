@@ -12,7 +12,7 @@ public interface UserService {
 
     UserResponse createUser(UserCreateRequest request);
 
-    List<UserResponse> getUsers(int page, int limit);
+    List<UserResponse> getAllUsers(int page, int limit);
 
     UserResponse getUserById(Long id);
 

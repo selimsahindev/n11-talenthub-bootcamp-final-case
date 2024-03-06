@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author selimsahindev
  */
@@ -19,7 +21,7 @@ public class UserReviewController {
     private final UserReviewService userReviewService;
 
     @GetMapping
-    public ResponseEntity<Iterable<UserReviewDetailDTO>> findAll() {
+    public ResponseEntity<List<UserReviewDetailDTO>> findAll() {
         return ResponseEntity.ok(userReviewService.findAll());
     }
 
@@ -29,7 +31,7 @@ public class UserReviewController {
     }
 
     @GetMapping("/by-user")
-    public ResponseEntity<Iterable<UserReviewDetailDTO>> findAllByUserId(@RequestParam Long userId) {
+    public ResponseEntity<List<UserReviewDetailDTO>> findAllByUserId(@RequestParam Long userId) {
         return ResponseEntity.ok(userReviewService.findAllByUserId(userId));
     }
 

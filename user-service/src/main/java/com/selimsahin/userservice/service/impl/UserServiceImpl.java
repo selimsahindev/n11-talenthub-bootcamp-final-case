@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getUsers(int page, int limit) {
+    public List<UserResponse> getAllUsers(int page, int limit) {
         Page<User> userPage = userRepository.findAll(PageRequest.of(page, limit));
 
         return userPage.getContent().stream()
@@ -67,7 +67,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(Long id, UserCreateRequest userDetails) {
-        return null;
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        User user = userOptional.get();
+        user.setName(userDetails.getName());
+        user.setSurname(userDetails.getSurname());
+        user.setEmail(userDetails.getEmail());
+
+        userRepository.save(user);
+
+        return mapToUserResponse(user);
     }
 
     @Override
