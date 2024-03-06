@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.model.entity;
 
-import com.selimsahin.userservice.model.entity.common.Auditable;
+import com.selimsahin.userservice.model.common.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
