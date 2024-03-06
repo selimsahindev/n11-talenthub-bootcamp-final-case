@@ -10,5 +10,6 @@ public record LocationDTO(
         Double latitude,
 
         @NotNull
-        Double longitude) {
+        Double longitude
+) {
 }
