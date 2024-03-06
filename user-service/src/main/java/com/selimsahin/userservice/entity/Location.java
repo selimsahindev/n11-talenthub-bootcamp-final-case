@@ -48,4 +48,26 @@ public class Location {
         public static LocationDTO mapLocationToLocationDTO(Location location) {
                 return new LocationDTO(location.getLatitude(), location.getLongitude());
         }
+
+        @Override
+        public boolean equals(Object obj) {
+                if (this == obj) { return true; }
+                if (obj == null || getClass() != obj.getClass()) { return false; }
+
+                Location location = (Location) obj;
+
+                if (!id.equals(location.id)) { return false; }
+                if (!user.equals(location.user)) { return false; }
+                if (!latitude.equals(location.latitude)) { return false; }
+                return longitude.equals(location.longitude);
+        }
+
+        @Override
+        public int hashCode() {
+                int result = id.hashCode();
+                result = 31 * result + user.hashCode();
+                result = 31 * result + latitude.hashCode();
+                result = 31 * result + longitude.hashCode();
+                return result;
+        }
 }
