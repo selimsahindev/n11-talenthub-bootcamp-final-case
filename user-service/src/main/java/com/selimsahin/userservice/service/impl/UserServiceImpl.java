@@ -1,10 +1,10 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.model.dto.LocationDTO;
-import com.selimsahin.userservice.model.dto.UserCreateRequest;
-import com.selimsahin.userservice.model.dto.UserResponse;
-import com.selimsahin.userservice.model.entity.Location;
-import com.selimsahin.userservice.model.entity.User;
+import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.dto.UserCreateRequest;
+import com.selimsahin.userservice.dto.UserResponse;
+import com.selimsahin.userservice.entity.Location;
+import com.selimsahin.userservice.entity.User;
 import com.selimsahin.userservice.repository.UserRepository;
 import com.selimsahin.userservice.service.LocationService;
 import com.selimsahin.userservice.service.UserService;

@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service;
 
-import com.selimsahin.userservice.model.dto.UserCreateRequest;
-import com.selimsahin.userservice.model.dto.UserResponse;
+import com.selimsahin.userservice.dto.UserCreateRequest;
+import com.selimsahin.userservice.dto.UserResponse;
 
 import java.util.List;
 

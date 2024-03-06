@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.model.dto.LocationDTO;
-import com.selimsahin.userservice.model.entity.Location;
+import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.entity.Location;
 import com.selimsahin.userservice.repository.LocationRepository;
 import com.selimsahin.userservice.service.LocationService;
 import lombok.RequiredArgsConstructor;

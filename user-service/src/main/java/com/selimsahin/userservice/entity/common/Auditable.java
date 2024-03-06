@@ -1,4 +1,4 @@
-package com.selimsahin.userservice.model.common;
+package com.selimsahin.userservice.entity.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.repository;
 
-import com.selimsahin.userservice.model.entity.User;
+import com.selimsahin.userservice.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

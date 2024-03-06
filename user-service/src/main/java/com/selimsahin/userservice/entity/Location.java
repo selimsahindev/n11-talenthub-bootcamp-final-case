@@ -1,6 +1,6 @@
-package com.selimsahin.userservice.model.entity;
+package com.selimsahin.userservice.entity;
 
-import com.selimsahin.userservice.model.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

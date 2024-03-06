@@ -1,9 +1,8 @@
-package com.selimsahin.userservice.model.dto;
+package com.selimsahin.userservice.dto;
 
 import com.selimsahin.userservice.enums.Gender;
 import com.selimsahin.userservice.enums.UserStatus;
-import com.selimsahin.userservice.model.entity.Location;
-import jakarta.persistence.Column;
+import com.selimsahin.userservice.entity.Location;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.service;
 
-import com.selimsahin.userservice.model.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDTO;
 
 /**
  * @author selimsahindev

@@ -1,4 +1,4 @@
-package com.selimsahin.userservice.model.dto;
+package com.selimsahin.userservice.dto;
 
 import jakarta.validation.constraints.NotNull;
 
