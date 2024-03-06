@@ -7,6 +7,7 @@ import com.selimsahin.restaurantservice.exception.RestaurantNotFoundException;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 /**
  * @author selimsahindev
  */
+@Service
 @RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
 
