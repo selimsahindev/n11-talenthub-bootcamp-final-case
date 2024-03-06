@@ -1,7 +1,10 @@
 package com.selimsahin.userservice.model.entity;
 
+import com.selimsahin.userservice.enums.Gender;
+import com.selimsahin.userservice.enums.UserStatus;
 import com.selimsahin.userservice.model.common.Auditable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,15 +21,23 @@ public class User extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 80)
+    @Column(name = "name", length = 80, nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = false, length = 80)
+    @Column(name = "surname", length = 80, nullable = false)
     private String surname;
 
-    @Column(name = "email", nullable = false, length = 100, unique = true)
+    @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", length = 30, nullable = false)
+    private Gender gender;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     private Location location;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status = UserStatus.ACTIVE;
 }
