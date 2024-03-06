@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDetailDTO;
 import com.selimsahin.userservice.entity.Location;
 import com.selimsahin.userservice.repository.LocationRepository;
 import com.selimsahin.userservice.service.LocationService;
@@ -17,11 +17,11 @@ public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
 
     @Override
-    public LocationDTO createLocation(LocationDTO locationDTO) {
+    public LocationDetailDTO createLocation(LocationDetailDTO locationDetailDTO) {
 
-        Location location = Location.mapLocationDTOToLocation(locationDTO);
+        Location location = Location.mapLocationDetailDTOToLocation(locationDetailDTO);
         location = locationRepository.save(location);
 
-        return Location.mapLocationToLocationDTO(location);
+        return Location.mapLocationToLocationDetailDTO(location);
     }
 }

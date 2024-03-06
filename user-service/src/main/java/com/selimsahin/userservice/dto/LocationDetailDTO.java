@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * @author selimsahindev
  */
-public record LocationDTO(
+public record LocationDetailDTO(
         @NotNull
         Double latitude,
 

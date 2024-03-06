@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDetailDTO;
 import com.selimsahin.userservice.dto.UserCreateRequest;
 import com.selimsahin.userservice.dto.UserResponse;
 import com.selimsahin.userservice.entity.Location;
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
         User user = mapUserCreateRequestToUser(request);
 
         // Create location
-        LocationDTO locationDTO = Location.mapLocationToLocationDTO(request.getLocation());
-        Location location = Location.mapLocationDTOToLocation(locationDTO);
+        LocationDetailDTO locationDetailDTO = Location.mapLocationToLocationDetailDTO(request.getLocation());
+        Location location = Location.mapLocationDetailDTOToLocation(locationDetailDTO);
 
         // Set location for user
         user.setLocation(location);

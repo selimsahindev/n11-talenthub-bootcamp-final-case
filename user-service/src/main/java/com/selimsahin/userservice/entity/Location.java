@@ -1,6 +1,6 @@
 package com.selimsahin.userservice.entity;
 
-import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDetailDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -42,11 +42,11 @@ public class Location {
         }
 
         // TODO: Implement MapStruct for mapping
-        public static Location mapLocationDTOToLocation(LocationDTO locationDTO) {
-                return new Location(locationDTO.latitude(), locationDTO.longitude());
+        public static Location mapLocationDetailDTOToLocation(LocationDetailDTO locationDetailDTO) {
+                return new Location(locationDetailDTO.latitude(), locationDetailDTO.longitude());
         }
-        public static LocationDTO mapLocationToLocationDTO(Location location) {
-                return new LocationDTO(location.getLatitude(), location.getLongitude());
+        public static LocationDetailDTO mapLocationToLocationDetailDTO(Location location) {
+                return new LocationDetailDTO(location.getLatitude(), location.getLongitude());
         }
 
         @Override

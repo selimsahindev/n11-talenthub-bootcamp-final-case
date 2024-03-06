@@ -1,11 +1,11 @@
 package com.selimsahin.userservice.service;
 
-import com.selimsahin.userservice.dto.LocationDTO;
+import com.selimsahin.userservice.dto.LocationDetailDTO;
 
 /**
  * @author selimsahindev
  */
 public interface LocationService {
 
-    LocationDTO createLocation(LocationDTO locationDTO);
+    LocationDetailDTO createLocation(LocationDetailDTO locationDetailDTO);
 }
