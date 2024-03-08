@@ -1,13 +1,20 @@
 package com.selimsahin.recommendationservice.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 /**
  * @author selimsahindev
  */
-public record RestaurantCreatedEventDTO(
+@RequiredArgsConstructor
+@Getter
+@Setter
+public class RestaurantDTO {
 
-    Long id,
-    String name,
-    Location location
-) {
+    private Long id;
+    private String name;
+    private Location location;
 }
 

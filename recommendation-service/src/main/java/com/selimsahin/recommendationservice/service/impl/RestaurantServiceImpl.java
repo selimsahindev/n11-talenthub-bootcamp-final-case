@@ -1,12 +1,15 @@
 package com.selimsahin.recommendationservice.service.impl;
 
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
-import com.selimsahin.recommendationservice.dto.RestaurantCreatedEventDTO;
+import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import com.selimsahin.recommendationservice.event.RestaurantCreatedEvent;
+import com.selimsahin.recommendationservice.mapper.RestaurantMapper;
 import com.selimsahin.recommendationservice.repository.RestaurantRepository;
 import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final RestaurantMapper restaurantMapper;
 
     public List<RestaurantSearchResponse> getRestaurantsByLocation(RestaurantSearchRequest request) {
 
@@ -26,32 +30,25 @@ public class RestaurantServiceImpl implements RestaurantService {
                 restaurantRepository.findByLocation(request.getLatitude(), request.getLongitude());
 
         return restaurants.stream()
-                .map(this::convertToResponse)
+                .map(restaurantMapper::restaurantDocumentToSearchResponse)
                 .toList();
     }
 
-    public void saveRestaurantDocument(RestaurantCreatedEventDTO dto) {
+    @EventListener
+    public void handleRestaurantCreatedEvent(RestaurantCreatedEvent event) {
 
-        RestaurantDocument document = convertToRestaurantDocument(dto);
+            System.out.println("RestaurantCreatedEvent: " + event.getRestaurantJson());
+
+            RestaurantDTO restaurantDto = restaurantMapper.restaurantJsonToDto(event.getRestaurantJson());
+            
+            //saveRestaurantDocument(restaurantDto);
+    }
+
+    public void saveRestaurantDocument(RestaurantDTO dto) {
+
+        RestaurantDocument document = restaurantMapper.restaurantDtoToDocument(dto);
 
         System.out.println("Saving restaurant document: " + document);
-
         restaurantRepository.save(document);
-    }
-
-    // Todo: Use MapStruct
-    private RestaurantSearchResponse convertToResponse(RestaurantDocument document) {
-        RestaurantSearchResponse response = new RestaurantSearchResponse();
-        response.setId(document.getId());
-        response.setName(document.getName());
-        return response;
-    }
-    private RestaurantDocument convertToRestaurantDocument(RestaurantCreatedEventDTO dto) {
-        RestaurantDocument document = new RestaurantDocument();
-        document.setId(dto.id());
-        document.setName(dto.name());
-        document.setLatitude(dto.location().latitude());
-        document.setLongitude(dto.location().longitude());
-        return document;
     }
 }

@@ -1,5 +1,6 @@
 package com.selimsahin.recommendationservice.service;
 
+import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
 
@@ -12,5 +13,5 @@ public interface RestaurantService {
 
     List<RestaurantSearchResponse> getRestaurantsByLocation(RestaurantSearchRequest request);
 
-    void saveRestaurantDocument(RestaurantSearchResponse restaurant);
+    void saveRestaurantDocument(RestaurantDTO restaurant);
 }
