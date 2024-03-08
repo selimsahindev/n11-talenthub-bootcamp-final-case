@@ -23,8 +23,8 @@ public class RestaurantDocument {
     @Indexed(name = "name", type = "string")
     private String name;
 
-    @Indexed(name = "averageScore", type = "pdouble")
-    private Float averageScore;
+    @Indexed(name = "averageRating", type = "pdouble")
+    private Float averageRating;
 
     @Indexed(name = "latitude", type = "pdouble")
     private Double latitude;
@@ -37,7 +37,7 @@ public class RestaurantDocument {
         return "RestaurantDocument{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", averageScore=" + averageScore +
+                ", averageScore=" + averageRating +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';

@@ -22,6 +22,9 @@ public class Restaurant extends Auditable {
     @Column(name = "name", length = 120, nullable = false)
     private String name;
 
+    @Column(name = "average_rating", nullable = false)
+    private Double averageRating = 0.0;
+
     @Embedded
     private Location location;
 }
