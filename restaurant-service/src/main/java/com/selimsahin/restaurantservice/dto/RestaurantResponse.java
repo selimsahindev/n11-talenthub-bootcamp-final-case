@@ -12,6 +12,7 @@ public class RestaurantResponse {
 
     private Long id;
     private String name;
+    private Double averageRating;
     private Location location;
 
     @Override
@@ -19,6 +20,7 @@ public class RestaurantResponse {
         return "RestaurantResponse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", averateRating=" + averageRating +
                 ", location=" + location +
                 '}';
     }
