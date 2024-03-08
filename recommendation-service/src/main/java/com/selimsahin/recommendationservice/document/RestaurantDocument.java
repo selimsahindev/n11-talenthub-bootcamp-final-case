@@ -31,4 +31,15 @@ public class RestaurantDocument {
 
     @Indexed(name = "longitude", type = "pdouble")
     private Double longitude;
+
+    @Override
+    public String toString() {
+        return "RestaurantDocument{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", averageScore=" + averageScore +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 }
