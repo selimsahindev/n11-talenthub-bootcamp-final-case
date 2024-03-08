@@ -4,7 +4,7 @@ import com.selimsahin.restaurantservice.dto.RestaurantCreateRequest;
 import com.selimsahin.restaurantservice.dto.RestaurantResponse;
 import com.selimsahin.restaurantservice.entity.Restaurant;
 import com.selimsahin.restaurantservice.exception.RestaurantNotFoundException;
-import com.selimsahin.restaurantservice.kafka.RestaurantEventProducer;
+import com.selimsahin.restaurantservice.producer.RestaurantEventProducer;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +27,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void createRestaurant(RestaurantCreateRequest restaurantCreateRequest) {
 
         Restaurant restaurant = mapRestaurantCreateRequestToRestaurant(restaurantCreateRequest);
+        restaurant = restaurantRepository.save(restaurant);
+
         RestaurantResponse restaurantResponse = mapRestaurantToRestaurantResponse(restaurant);
 
         // Send to Kafka
         restaurantEventProducer.publishRestaurantCreatedEvent(restaurantResponse);
-
-        restaurantRepository.save(restaurant);
     }
 
     @Override

@@ -11,4 +11,6 @@ import java.util.List;
 public interface RestaurantService {
 
     List<RestaurantSearchResponse> getRestaurantsByLocation(RestaurantSearchRequest request);
+
+    void saveRestaurantDocument(RestaurantSearchResponse restaurant);
 }

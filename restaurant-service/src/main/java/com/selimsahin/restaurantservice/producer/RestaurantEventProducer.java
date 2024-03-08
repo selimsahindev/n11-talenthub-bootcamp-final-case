@@ -1,7 +1,8 @@
-package com.selimsahin.restaurantservice.kafka;
+package com.selimsahin.restaurantservice.producer;
 
 import com.selimsahin.restaurantservice.dto.RestaurantResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantEventProducer {
 
     @Value("${kafka.topic.restaurant-created}")
@@ -20,7 +22,8 @@ public class RestaurantEventProducer {
 
     public void publishRestaurantCreatedEvent(RestaurantResponse restaurant) {
 
-        System.out.println("RestaurantEventProducer.publishRestaurantCreatedEvent: " + restaurant);
+        log.info("Restaurant Created Event: {}", restaurant);
+
         kafkaTemplate.send(restaurantCreatedTopic, restaurant);
     }
 }

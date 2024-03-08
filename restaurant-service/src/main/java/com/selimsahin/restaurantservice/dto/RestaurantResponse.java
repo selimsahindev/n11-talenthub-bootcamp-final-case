@@ -13,4 +13,13 @@ public class RestaurantResponse {
     private Long id;
     private String name;
     private Location location;
+
+    @Override
+    public String toString() {
+        return "RestaurantResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location=" + location +
+                '}';
+    }
 }
