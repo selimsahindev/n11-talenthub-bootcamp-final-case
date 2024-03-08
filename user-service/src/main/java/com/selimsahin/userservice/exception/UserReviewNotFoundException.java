@@ -1,4 +1,4 @@
-package com.selimsahin.userreviewservice.exception;
+package com.selimsahin.userservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

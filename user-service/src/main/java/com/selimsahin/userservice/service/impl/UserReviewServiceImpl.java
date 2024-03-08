@@ -1,12 +1,12 @@
-package com.selimsahin.userreviewservice.service.impl;
+package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userreviewservice.dto.UserReviewCreateRequest;
-import com.selimsahin.userreviewservice.dto.UserReviewDetailDTO;
-import com.selimsahin.userreviewservice.entity.UserReview;
-import com.selimsahin.userreviewservice.enums.UserRating;
-import com.selimsahin.userreviewservice.exception.UserReviewNotFoundException;
-import com.selimsahin.userreviewservice.repository.UserReviewRepository;
-import com.selimsahin.userreviewservice.service.UserReviewService;
+import com.selimsahin.userservice.dto.UserReviewCreateRequest;
+import com.selimsahin.userservice.dto.UserReviewDetailDTO;
+import com.selimsahin.userservice.entity.UserReview;
+import com.selimsahin.userservice.enums.UserRating;
+import com.selimsahin.userservice.exception.UserReviewNotFoundException;
+import com.selimsahin.userservice.repository.UserReviewRepository;
+import com.selimsahin.userservice.service.UserReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package com.selimsahin.userreviewservice.entity;
+package com.selimsahin.userservice.entity;
 
-import com.selimsahin.userreviewservice.entity.common.Auditable;
-import com.selimsahin.userreviewservice.enums.UserRating;
+import com.selimsahin.userservice.entity.common.Auditable;
+import com.selimsahin.userservice.enums.UserRating;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

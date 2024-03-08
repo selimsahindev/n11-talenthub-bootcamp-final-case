@@ -1,7 +1,7 @@
-package com.selimsahin.userreviewservice.service;
+package com.selimsahin.userservice.service;
 
-import com.selimsahin.userreviewservice.dto.UserReviewDetailDTO;
-import com.selimsahin.userreviewservice.dto.UserReviewCreateRequest;
+import com.selimsahin.userservice.dto.UserReviewCreateRequest;
+import com.selimsahin.userservice.dto.UserReviewDetailDTO;
 
 import java.util.List;
 

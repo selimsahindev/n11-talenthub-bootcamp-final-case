@@ -1,8 +1,8 @@
-package com.selimsahin.userreviewservice.controller;
+package com.selimsahin.userservice.controller;
 
-import com.selimsahin.userreviewservice.dto.UserReviewCreateRequest;
-import com.selimsahin.userreviewservice.dto.UserReviewDetailDTO;
-import com.selimsahin.userreviewservice.service.UserReviewService;
+import com.selimsahin.userservice.dto.UserReviewCreateRequest;
+import com.selimsahin.userservice.dto.UserReviewDetailDTO;
+import com.selimsahin.userservice.service.UserReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

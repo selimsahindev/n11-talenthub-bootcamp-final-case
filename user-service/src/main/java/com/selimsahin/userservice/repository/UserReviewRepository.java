@@ -1,6 +1,6 @@
-package com.selimsahin.userreviewservice.repository;
+package com.selimsahin.userservice.repository;
 
-import com.selimsahin.userreviewservice.entity.UserReview;
+import com.selimsahin.userservice.entity.UserReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

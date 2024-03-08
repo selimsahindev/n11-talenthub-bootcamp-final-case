@@ -1,4 +1,4 @@
-package com.selimsahin.userreviewservice.enums;
+package com.selimsahin.userservice.enums;
 
 import lombok.Getter;
 
