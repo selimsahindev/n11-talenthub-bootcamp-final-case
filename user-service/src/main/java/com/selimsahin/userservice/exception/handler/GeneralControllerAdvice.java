@@ -1,6 +1,7 @@
 package com.selimsahin.userservice.exception.handler;
 
 import com.selimsahin.userservice.exception.UserNotFoundException;
+import com.selimsahin.userservice.exception.UserReviewNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +35,14 @@ public class GeneralControllerAdvice {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    // Todo: Add UserReviewNotFoundException handler
+    @ExceptionHandler(UserReviewNotFoundException.class)
+    public ResponseEntity<Map> handleUserReviewNotFoundException(UserReviewNotFoundException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
