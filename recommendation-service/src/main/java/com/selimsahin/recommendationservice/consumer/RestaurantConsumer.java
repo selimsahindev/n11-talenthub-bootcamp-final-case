@@ -1,4 +1,4 @@
-package com.selimsahin.recommendationservice.listener;
+package com.selimsahin.recommendationservice.consumer;
 
 import com.selimsahin.recommendationservice.event.RestaurantCreatedEvent;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * @author selimsahindev
  */
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class RestaurantListener {
+@RequiredArgsConstructor
+public class RestaurantConsumer {
 
     private final ApplicationEventPublisher eventPublisher;
 
