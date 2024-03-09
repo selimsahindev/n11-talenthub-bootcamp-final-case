@@ -3,8 +3,8 @@ package com.selimsahin.userservice.service.impl;
 import com.selimsahin.userservice.dto.UserReviewCreateRequest;
 import com.selimsahin.userservice.dto.UserReviewDetailDTO;
 import com.selimsahin.userservice.entity.UserReview;
-import com.selimsahin.userservice.enums.UserRating;
 import com.selimsahin.userservice.exception.UserReviewNotFoundException;
+import com.selimsahin.userservice.mapper.UserReviewMapper;
 import com.selimsahin.userservice.repository.UserReviewRepository;
 import com.selimsahin.userservice.service.UserReviewService;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +21,22 @@ import java.util.Optional;
 public class UserReviewServiceImpl implements UserReviewService {
 
     private final UserReviewRepository userReviewRepository;
+    private final UserReviewMapper userReviewMapper;
 
     @Override
     public UserReviewDetailDTO create(UserReviewCreateRequest request) {
 
-        UserReview userReview = mapUserReviewCreateRequestToUserReview(request);
+        UserReview userReview = userReviewMapper.mapUserReviewCreateRequestToUserReview(request);
         userReview = userReviewRepository.save(userReview);
 
-        return mapUserReviewToUserReviewDetailDTO(userReview);
+        return userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
     }
 
     @Override
     public List<UserReviewDetailDTO> findAll() {
 
         return userReviewRepository.findAll().stream()
-                .map(this::mapUserReviewToUserReviewDetailDTO)
+                .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
                 .toList();
     }
 
@@ -48,7 +49,7 @@ public class UserReviewServiceImpl implements UserReviewService {
             throw new UserReviewNotFoundException("User review not found with id: " + id);
         }
 
-        return mapUserReviewToUserReviewDetailDTO(userReviewOptional.get());
+        return userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReviewOptional.get());
     }
 
     @Override
@@ -61,24 +62,7 @@ public class UserReviewServiceImpl implements UserReviewService {
         }
 
         return userReviewsOptional.get().stream()
-                .map(this::mapUserReviewToUserReviewDetailDTO)
+                .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
                 .toList();
-    }
-
-    // TODO: Use MapStruct and get rid of these methods
-    private UserReview mapUserReviewCreateRequestToUserReview(UserReviewCreateRequest request) {
-        UserReview userReview = new UserReview();
-        userReview.setUserId(request.userId());
-        userReview.setRate(UserRating.fromValue(request.rate()));
-        userReview.setComment(request.comment());
-        return userReview;
-    }
-    private UserReviewDetailDTO mapUserReviewToUserReviewDetailDTO(UserReview userReview) {
-        UserReviewDetailDTO userReviewDetailDTO = new UserReviewDetailDTO();
-        userReviewDetailDTO.setId(userReview.getId());
-        userReviewDetailDTO.setUserId(userReview.getUserId());
-        userReviewDetailDTO.setRate(userReview.getRate());
-        userReviewDetailDTO.setComment(userReview.getComment());
-        return userReviewDetailDTO;
     }
 }
