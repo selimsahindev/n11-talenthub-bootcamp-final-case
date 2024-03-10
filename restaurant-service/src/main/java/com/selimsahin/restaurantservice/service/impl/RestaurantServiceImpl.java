@@ -5,6 +5,7 @@ import com.selimsahin.restaurantservice.dto.RestaurantResponse;
 import com.selimsahin.restaurantservice.entity.Restaurant;
 import com.selimsahin.restaurantservice.exception.RestaurantNotFoundException;
 import com.selimsahin.restaurantservice.mapper.RestaurantMapper;
+import com.selimsahin.restaurantservice.producer.LogProducerService;
 import com.selimsahin.restaurantservice.producer.RestaurantEventProducer;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
@@ -26,6 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
     private final RestaurantEventProducer restaurantEventProducer;
+    private final LogProducerService logProducerService;
 
     @Override
     public void createRestaurant(RestaurantCreateRequest restaurantCreateRequest) {
@@ -38,7 +40,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         // Publish restaurant created event to Kafka
         restaurantEventProducer.publishRestaurantCreatedEvent(restaurantResponse);
 
-        log.info("Restaurant created: {}", restaurantResponse);
+        // Publish log to Kafka
+        logProducerService.publishInfoLog("Restaurant created: " + restaurantResponse);
     }
 
     @Override
