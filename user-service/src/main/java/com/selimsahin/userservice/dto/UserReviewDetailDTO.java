@@ -10,8 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserReviewDetailDTO {
+
     private Long id;
     private Long userId;
+    private Long restaurantId;
     private UserRating rate;
     private String comment;
 }

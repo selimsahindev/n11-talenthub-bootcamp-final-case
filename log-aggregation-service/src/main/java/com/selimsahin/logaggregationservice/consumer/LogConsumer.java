@@ -1,10 +1,10 @@
-package com.selimsahin.logaggregationservice.service;
+package com.selimsahin.logaggregationservice.consumer;
 
 import com.selimsahin.logaggregationservice.entity.ErrorLog;
 import com.selimsahin.logaggregationservice.entity.InfoLog;
+import com.selimsahin.logaggregationservice.service.ErrorLogService;
+import com.selimsahin.logaggregationservice.service.InfoLogService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
  */
 @Service
 @RequiredArgsConstructor
-public class KafkaConsumerService {
+public class LogConsumer {
 
     private final ErrorLogService errorLogService;
     private final InfoLogService infoLogService;
 
-    @KafkaListener(topics = "${kafka.topic.error-log}", groupId = "log-consumer-group")
+    @KafkaListener(topics = "${kafka.topic.error-log}", groupId = "${spring.kafka.consumer.group-id}")
     public void consumeErrorLog(String message){
 
         ErrorLog errorLog = ErrorLog.builder()
@@ -32,7 +32,7 @@ public class KafkaConsumerService {
         errorLogService.createErrorLog(errorLog);
     }
 
-    @KafkaListener(topics = "${kafka.topic.info-log}", groupId = "log-consumer-group")
+    @KafkaListener(topics = "${kafka.topic.info-log}", groupId = "${spring.kafka.consumer.group-id}")
     public void consumeInfoLog(String message){
 
         InfoLog infoLog = InfoLog.builder()

@@ -52,6 +52,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Kafka -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -70,6 +76,13 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${org.mapstruct.version}</version>
+		</dependency>
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 
 		<!-- Test Dependencies -->
