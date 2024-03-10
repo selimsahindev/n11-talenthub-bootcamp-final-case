@@ -16,5 +16,7 @@ public interface RestaurantService {
 
     RestaurantResponse getRestaurantById(Long id);
 
+    void updateAverageRating(Long restaurantId, Double newAverageRating);
+
     void deleteRestaurant(Long id);
 }

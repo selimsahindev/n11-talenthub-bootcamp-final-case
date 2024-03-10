@@ -1,7 +1,6 @@
 package com.selimsahin.userservice.producer;
 
 import com.selimsahin.userservice.dto.AverageRatingUpdateDTO;
-import com.selimsahin.userservice.dto.UserReviewDetailDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,16 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class KafkaProducerService {
+public class KafkaProducer {
 
     @Value("${kafka.topic.average-rating-update}")
     private String averageRatingUpdateTopic;
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
-
-//    public void publishUserReviewCreatedEvent(UserReviewDetailDTO userReviewDetailDTO) {
-//        kafkaTemplate.send(userReviewCreatedTopic, userReviewDetailDTO);
-//    }
 
     public void publishAverageRatingCalculatedEvent(Long restaurantId, Double averageRating) {
 

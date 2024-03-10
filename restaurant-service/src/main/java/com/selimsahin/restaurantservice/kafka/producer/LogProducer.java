@@ -1,4 +1,4 @@
-package com.selimsahin.restaurantservice.producer;
+package com.selimsahin.restaurantservice.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class LogProducerService {
+public class LogProducer {
 
     @Value("${kafka.topic.error-log}")
     private String errorLogTopic;

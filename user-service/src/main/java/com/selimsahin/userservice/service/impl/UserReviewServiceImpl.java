@@ -3,10 +3,9 @@ package com.selimsahin.userservice.service.impl;
 import com.selimsahin.userservice.dto.UserReviewCreateRequest;
 import com.selimsahin.userservice.dto.UserReviewDetailDTO;
 import com.selimsahin.userservice.entity.UserReview;
-import com.selimsahin.userservice.enums.UserRating;
 import com.selimsahin.userservice.exception.UserReviewNotFoundException;
 import com.selimsahin.userservice.mapper.UserReviewMapper;
-import com.selimsahin.userservice.producer.KafkaProducerService;
+import com.selimsahin.userservice.producer.KafkaProducer;
 import com.selimsahin.userservice.repository.UserReviewRepository;
 import com.selimsahin.userservice.service.UserReviewService;
 import com.selimsahin.userservice.service.UserService;
@@ -26,7 +25,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     private final UserReviewRepository userReviewRepository;
     private final UserReviewMapper userReviewMapper;
     private final UserService userService;
-    private final KafkaProducerService userReviewProducerService;
+    private final KafkaProducer userReviewProducerService;
 
     @Override
     public UserReviewDetailDTO create(UserReviewCreateRequest request) {
@@ -36,7 +35,6 @@ public class UserReviewServiceImpl implements UserReviewService {
 
         UserReviewDetailDTO userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
 
-        // Update restaurant average rating.
         updateRestaurantAverageRating(userReview.getRestaurantId());
 
         return userReviewDetailDTO;
@@ -65,7 +63,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     @Override
     public List<UserReviewDetailDTO> findAllByUserId(Long userId) {
 
-        // Check if the user exists. Throws UserNotFoundException if the user does not exist.
+        // Check if the user exists.
         userService.getUserById(userId);
 
         List<UserReview> userReviews = userReviewRepository.findAllByUserId(userId);
@@ -78,8 +76,6 @@ public class UserReviewServiceImpl implements UserReviewService {
     private void updateRestaurantAverageRating(Long restaurantId) {
 
         Double averageRating = userReviewRepository.findAverageRatingByRestaurantId(restaurantId);
-
-        System.out.println("Average rating: " + averageRating);
 
         // Publish restaurant average rating updated event to Kafka.
         userReviewProducerService.publishAverageRatingCalculatedEvent(restaurantId, averageRating);

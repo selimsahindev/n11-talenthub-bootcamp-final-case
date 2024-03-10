@@ -1,11 +1,9 @@
-package com.selimsahin.restaurantservice.producer;
+package com.selimsahin.restaurantservice.kafka.producer;
 
 import com.selimsahin.restaurantservice.dto.RestaurantResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class RestaurantProducerService {
+public class RestaurantProducer {
 
     @Value("${kafka.topic.restaurant-created}")
     private String restaurantCreatedTopic;
