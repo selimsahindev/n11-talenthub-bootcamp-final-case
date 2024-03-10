@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RestaurantConsumer {
+public class RestaurantConsumerService {
 
     private final ApplicationEventPublisher eventPublisher;
 
     @KafkaListener(topics = "${kafka.topic.restaurant-created}")
     public void consume(ConsumerRecord<String, String> payload) {
 
-        RestaurantCreatedEvent event = new RestaurantCreatedEvent(payload.value());
-        eventPublisher.publishEvent(event);
+        // Publish restaurant created event to the application.
+        eventPublisher.publishEvent(new RestaurantCreatedEvent(payload.value()));
     }
 }

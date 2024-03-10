@@ -6,9 +6,6 @@ import lombok.Getter;
 /**
  * @author selimsahindev
  */
-@AllArgsConstructor
-@Getter
-public class RestaurantCreatedEvent {
+public record RestaurantCreatedEvent (String restaurantJson) {
 
-    private String restaurantJson;
 }

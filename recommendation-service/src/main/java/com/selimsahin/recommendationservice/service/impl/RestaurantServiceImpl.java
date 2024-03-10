@@ -34,21 +34,21 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .toList();
     }
 
-    @EventListener
-    public void handleRestaurantCreatedEvent(RestaurantCreatedEvent event) {
-
-            System.out.println("RestaurantCreatedEvent: " + event.getRestaurantJson());
-
-            RestaurantDTO restaurantDto = restaurantMapper.restaurantJsonToDto(event.getRestaurantJson());
-            
-            //saveRestaurantDocument(restaurantDto);
-    }
-
     public void saveRestaurantDocument(RestaurantDTO dto) {
 
         RestaurantDocument document = restaurantMapper.restaurantDtoToDocument(dto);
 
         System.out.println("Saving restaurant document: " + document);
         restaurantRepository.save(document);
+    }
+
+    @EventListener
+    public void handleRestaurantCreatedEvent(RestaurantCreatedEvent event) {
+
+            RestaurantDTO restaurantDto = restaurantMapper.restaurantJsonToDto(event.restaurantJson());
+
+            //saveRestaurantDocument(restaurantDto);
+
+            System.out.println("RestaurantCreatedEvent: " + event.restaurantJson());
     }
 }
