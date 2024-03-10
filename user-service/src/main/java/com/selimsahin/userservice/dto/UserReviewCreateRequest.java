@@ -13,6 +13,9 @@ public record UserReviewCreateRequest (
         @NotNull(message = "User ID is required.")
         Long userId,
 
+        @NotNull(message = "Restaurant ID is required.")
+        Long restaurantId,
+
         @NotNull(message = "Rating is required.")
         @Range(min = 1, max = 5, message = "Rating must be between 1 and 5.")
         Integer rate,

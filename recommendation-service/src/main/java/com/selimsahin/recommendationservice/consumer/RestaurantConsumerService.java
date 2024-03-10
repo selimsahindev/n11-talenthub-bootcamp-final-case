@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
  * @author selimsahindev
  */
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class RestaurantConsumerService {
 

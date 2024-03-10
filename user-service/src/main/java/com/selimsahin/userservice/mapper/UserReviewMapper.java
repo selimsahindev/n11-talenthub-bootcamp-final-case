@@ -21,6 +21,7 @@ public interface UserReviewMapper {
     UserReview mapUserReviewCreateRequestToUserReview(UserReviewCreateRequest request);
 
     @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "restaurantId", target = "restaurantId")
     @Mapping(source = "rate", target = "rate")
     @Mapping(source = "comment", target = "comment")
     UserReviewDetailDTO mapUserReviewToUserReviewDetailDTO(UserReview userReview);

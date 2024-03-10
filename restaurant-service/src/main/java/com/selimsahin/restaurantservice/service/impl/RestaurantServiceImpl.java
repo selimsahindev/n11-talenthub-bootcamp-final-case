@@ -6,7 +6,7 @@ import com.selimsahin.restaurantservice.entity.Restaurant;
 import com.selimsahin.restaurantservice.exception.RestaurantNotFoundException;
 import com.selimsahin.restaurantservice.mapper.RestaurantMapper;
 import com.selimsahin.restaurantservice.producer.LogProducerService;
-import com.selimsahin.restaurantservice.producer.RestaurantEventProducer;
+import com.selimsahin.restaurantservice.producer.RestaurantProducerService;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
-    private final RestaurantEventProducer restaurantEventProducer;
+    private final RestaurantProducerService restaurantEventProducer;
     private final LogProducerService logProducerService;
 
     @Override

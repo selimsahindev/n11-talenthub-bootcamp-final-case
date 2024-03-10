@@ -7,5 +7,4 @@ import lombok.Getter;
  * @author selimsahindev
  */
 public record RestaurantCreatedEvent (String restaurantJson) {
-
 }
