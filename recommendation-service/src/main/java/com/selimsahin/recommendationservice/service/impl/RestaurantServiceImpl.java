@@ -1,5 +1,7 @@
 package com.selimsahin.recommendationservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
@@ -9,6 +11,7 @@ import com.selimsahin.recommendationservice.mapper.RestaurantMapper;
 import com.selimsahin.recommendationservice.repository.RestaurantRepository;
 import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,12 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
+    private final ObjectMapper objectMapper;
 
     public List<RestaurantSearchResponse> getRestaurantsByLocation(RestaurantSearchRequest request) {
 
@@ -34,21 +39,19 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .toList();
     }
 
-    public void saveRestaurantDocument(RestaurantDTO dto) {
+    public void saveRestaurantDocument(RestaurantDTO restaurantDto) {
 
-        RestaurantDocument document = restaurantMapper.restaurantDtoToDocument(dto);
+        RestaurantDocument restaurantDocument = restaurantMapper.restaurantDtoToDocument(restaurantDto);
 
-        System.out.println("Saving restaurant document: " + document);
-        restaurantRepository.save(document);
+        restaurantRepository.save(restaurantDocument);
+
+        log.info("Restaurant saved to Solr: {}", restaurantDocument);
     }
 
     @EventListener
-    public void handleRestaurantCreatedEvent(RestaurantCreatedEvent event) {
+    public void handleRestaurantCreatedEvent(RestaurantCreatedEvent event) throws JsonProcessingException {
 
-            RestaurantDTO restaurantDto = restaurantMapper.restaurantJsonToDto(event.restaurantJson());
-
-            //saveRestaurantDocument(restaurantDto);
-
-            System.out.println("RestaurantCreatedEvent: " + event.restaurantJson());
+        RestaurantDTO restaurantDto = objectMapper.readValue(event.restaurantJson(), RestaurantDTO.class);
+        saveRestaurantDocument(restaurantDto);
     }
 }

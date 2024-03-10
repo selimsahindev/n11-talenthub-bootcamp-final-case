@@ -10,7 +10,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 /**
  * @author selimsahindev
  */
-@SolrDocument(collection = "restaurant")
+@SolrDocument(collection = "restaurants")
 @RequiredArgsConstructor
 @Getter
 @Setter
@@ -23,7 +23,7 @@ public class RestaurantDocument {
     @Indexed(name = "name", type = "string")
     private String name;
 
-    @Indexed(name = "averageRating", type = "pdouble")
+    @Indexed(name = "average_rating", type = "pdouble")
     private Float averageRating;
 
     @Indexed(name = "latitude", type = "pdouble")

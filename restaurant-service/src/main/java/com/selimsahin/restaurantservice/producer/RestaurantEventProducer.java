@@ -24,6 +24,6 @@ public class RestaurantEventProducer {
 
         kafkaTemplate.send(restaurantCreatedTopic, restaurant);
 
-        log.info("Restaurant Created Event: {}", restaurant);
+        System.out.println("Created: " + restaurant);
     }
 }

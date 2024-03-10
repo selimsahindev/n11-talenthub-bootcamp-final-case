@@ -5,11 +5,12 @@ import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author selimsahindev
  */
-public interface RestaurantRepository extends SolrCrudRepository<RestaurantDocument, Long> {
+public interface RestaurantRepository extends SolrCrudRepository<RestaurantDocument, String> {
 
     @Query("latitude:?0 AND longitude:?1")
     List<RestaurantDocument> findByLocation(Double latitude, Double longitude);
