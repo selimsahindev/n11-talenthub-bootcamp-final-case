@@ -1,6 +1,5 @@
 package com.selimsahin.restaurantservice.kafka.consumer;
 
-import com.selimsahin.restaurantservice.dto.AverageRatingUpdateDTO;
 import com.selimsahin.restaurantservice.event.AverageRatingUpdatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

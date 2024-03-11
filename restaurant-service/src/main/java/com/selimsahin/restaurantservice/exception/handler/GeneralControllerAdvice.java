@@ -25,7 +25,7 @@ public class GeneralControllerAdvice {
     }
 
     @ExceptionHandler(RestaurantNotFoundException.class)
-    public ResponseEntity<Map> handleUserNotFoundException(RestaurantNotFoundException exception) {
+    public ResponseEntity<Map> handleRestaurantNotFoundException(RestaurantNotFoundException exception) {
 
         Map<String, String> response = new HashMap<>();
         response.put("message", exception.getMessage());
