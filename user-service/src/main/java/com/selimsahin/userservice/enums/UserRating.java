@@ -7,6 +7,9 @@ import lombok.Getter;
  */
 @Getter
 public enum UserRating {
+    // This is not a valid rating, but we keep this to
+    // solve the index problem in the PostgreSQL table.
+    ZERO(0),
     ONE(1),
     TWO(2),
     THREE(3),
