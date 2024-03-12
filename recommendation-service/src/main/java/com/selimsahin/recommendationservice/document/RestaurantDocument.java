@@ -1,11 +1,16 @@
 package com.selimsahin.recommendationservice.document;
 
+import com.selimsahin.recommendationservice.dto.Location;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.solr.core.geo.Point;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
+
+import javax.validation.constraints.*;
 
 /**
  * @author selimsahindev
@@ -17,29 +22,29 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 public class RestaurantDocument {
     
     @Id
-    @Indexed(name = "id", type = "long")
-    private Long id;
+    @Field("id")
+    private String id;
 
-    @Indexed(name = "name", type = "string")
+    @Field("name")
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @Indexed(name = "average_rating", type = "pdouble")
-    private Float averageRating;
+    @Field("average_rating")
+    @NotNull(message = "Average rating is mandatory")
+    @PositiveOrZero(message = "Average rating must be a positive value or zero")
+    @DecimalMax(value = "5.0", inclusive = true, message = "Average rating must be less than or equal to 5")
+    private Double averageRating;
 
-    @Indexed(name = "latitude", type = "pdouble")
-    private Double latitude;
+    @Field("location")
+    @NotBlank(message = "Location is mandatory")
+    private String location;
 
-    @Indexed(name = "longitude", type = "pdouble")
-    private Double longitude;
-
-    @Override
-    public String toString() {
-        return "RestaurantDocument{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", averageScore=" + averageRating +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+    public static RestaurantDocument fromSolrDocument(org.apache.solr.common.SolrDocument document) {
+        RestaurantDocument restaurant = new RestaurantDocument();
+        restaurant.setId((String) document.getFieldValue("id"));
+        restaurant.setName((String) document.getFieldValue("name"));
+        restaurant.setAverageRating((Double) document.getFieldValue("average_rating"));
+        restaurant.setLocation((String) document.getFieldValue("location"));
+        return restaurant;
     }
 }

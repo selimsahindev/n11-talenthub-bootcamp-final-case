@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class RestaurantSearchResponse {
 
-    private Long id;
+    private String id;
     private String name;
-    private Double averageScore;
+    private Double averageRating;
 }
