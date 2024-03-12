@@ -8,9 +8,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.data.solr.core.geo.Point;
-
-import java.util.List;
 
 /**
  * @author selimsahindev
@@ -18,10 +15,11 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface RestaurantMapper {
 
-    RestaurantSearchResponse restaurantDocumentToSearchResponse(RestaurantDocument document);
+    @Mapping(source = "location", target = "location", qualifiedByName = "convertStringToLocation")
+    RestaurantSearchResponse mapToRestaurantSearchResponse(RestaurantDocument document);
 
     @Mapping(source = "location", target = "location", qualifiedByName = "convertLocationToString")
-    RestaurantDocument restaurantDtoToDocument(RestaurantDTO dto);
+    RestaurantDocument mapToRestaurantDocument(RestaurantDTO dto);
 
     @Named("convertLocationToString")
     default String convertLocationToString(Location location) {
@@ -29,5 +27,17 @@ public interface RestaurantMapper {
             return null;
         }
         return location.latitude() + "," + location.longitude();
+    }
+
+    @Named("convertStringToLocation")
+    default Location convertStringToLocation(String location) {
+        if (location == null || location.isBlank() || location.isEmpty()) {
+            return null;
+        }
+        String[] latLong = location.split(",");
+        return new Location(
+                Double.parseDouble(latLong[0]),
+                Double.parseDouble(latLong[1])
+        );
     }
 }
