@@ -4,7 +4,9 @@ import com.selimsahin.recommendationservice.document.RestaurantDocument;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import org.apache.solr.client.solrj.SolrServerException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public interface RestaurantService {
 
     List<RestaurantDocument> getAllRestaurants();
 
-    List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request);
+    List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request) throws SolrServerException, IOException;
 
     void saveRestaurantDocument(RestaurantDTO restaurant);
 }

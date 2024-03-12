@@ -5,9 +5,11 @@ import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
 import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ public class RestaurantSearchController {
 
     @GetMapping("/by-location-near")
     public ResponseEntity<List<RestaurantSearchResponse>> searchByLocationNear(
-            @ModelAttribute RestaurantSearchRequest request) {
+            @ModelAttribute RestaurantSearchRequest request) throws SolrServerException, IOException {
 
         return ResponseEntity.ok(restaurantService.getRestaurantsByLocationNear(request));
     }
