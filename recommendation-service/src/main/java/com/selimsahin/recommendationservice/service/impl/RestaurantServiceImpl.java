@@ -1,9 +1,11 @@
 package com.selimsahin.recommendationservice.service.impl;
 
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
+import com.selimsahin.recommendationservice.dto.Location;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import com.selimsahin.recommendationservice.exception.SolrQueryException;
 import com.selimsahin.recommendationservice.mapper.RestaurantMapper;
 import com.selimsahin.recommendationservice.repository.RestaurantRepository;
 import com.selimsahin.recommendationservice.service.RestaurantService;
@@ -15,7 +17,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.SolrInputDocument;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -54,13 +55,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         } catch (SolrServerException | IOException e) {
             // Handle exceptions appropriately
-            throw new RuntimeException("Failed to retrieve restaurants from Solr", e);
+            throw new SolrQueryException("Failed to retrieve restaurants from Solr");
         }
     }
 
     @Override
-    public List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request) throws SolrServerException, IOException {
+    public List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request) {
 
+        try {
             double[] latLong = getLatLong(request.location());
             double latitude = latLong[0];
             double longitude = latLong[1];
@@ -77,29 +79,28 @@ public class RestaurantServiceImpl implements RestaurantService {
             List<RestaurantSearchResponse> restaurantSearchResponses = new ArrayList<>();
 
             for (SolrDocument doc : solrDocuments) {
-                RestaurantSearchResponse resultDTO = new RestaurantSearchResponse(
+                double[] location = getLatLong((String) doc.getFieldValue("location"));
+
+                RestaurantSearchResponse responseDto = new RestaurantSearchResponse(
                         (String) doc.getFieldValue("id"),
                         (String) doc.getFieldValue("name"),
-                        (Double) doc.getFieldValue("average_rating")
-
+                        (Double) doc.getFieldValue("average_rating"),
+                        new Location(location[0], location[1])
                 );
-                restaurantSearchResponses.add(resultDTO);
+                restaurantSearchResponses.add(responseDto);
             }
 
             return restaurantSearchResponses;
 
+        } catch (Exception e) {
+            throw new SolrQueryException("Failed to retrieve restaurants from Solr");
+        }
     }
 
     @Override
     public void saveRestaurantDocument(RestaurantDTO restaurantDto) {
 
         RestaurantDocument restaurantDocument = restaurantMapper.restaurantDtoToDocument(restaurantDto);
-
-//        SolrInputDocument doc = new SolrInputDocument();
-//        doc.addField("id", restaurantDocument.getId());
-//        doc.addField("name", restaurantDocument.getName());
-//        doc.addField("average_rating", restaurantDocument.getAverageRating());
-//        doc.addField("location", restaurantDocument.getLocation());
 
         restaurantRepository.save(restaurantDocument);
 

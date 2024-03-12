@@ -15,4 +15,5 @@ public class RestaurantSearchResponse {
     private String id;
     private String name;
     private Double averageRating;
+    private Location location;
 }

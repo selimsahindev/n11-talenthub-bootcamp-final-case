@@ -16,7 +16,7 @@ public interface RestaurantService {
 
     List<RestaurantDocument> getAllRestaurants();
 
-    List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request) throws SolrServerException, IOException;
+    List<RestaurantSearchResponse> getRestaurantsByLocationNear(RestaurantSearchRequest request);
 
     void saveRestaurantDocument(RestaurantDTO restaurant);
 }

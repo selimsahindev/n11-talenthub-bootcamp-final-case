@@ -29,7 +29,7 @@ public class RestaurantSearchController {
 
     @GetMapping("/by-location-near")
     public ResponseEntity<List<RestaurantSearchResponse>> searchByLocationNear(
-            @ModelAttribute RestaurantSearchRequest request) throws SolrServerException, IOException {
+            @ModelAttribute RestaurantSearchRequest request) {
 
         return ResponseEntity.ok(restaurantService.getRestaurantsByLocationNear(request));
     }

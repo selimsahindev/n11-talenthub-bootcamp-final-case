@@ -1,5 +1,6 @@
 package com.selimsahin.recommendationservice.exception.handler;
 
+import com.selimsahin.recommendationservice.exception.SolrQueryException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,23 @@ import java.util.Map;
 @Slf4j
 public class GeneralControllerAdvice {
 
-//    @ExceptionHandler
-//    public ResponseEntity<Map> handleAllExceptions(RuntimeException exception) {
-//
-//        Map<String, String> response = new HashMap<>();
-//        response.put("message", exception.getMessage());
-//
-//        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
-//    }
+    @ExceptionHandler
+    public ResponseEntity<Map> handleAllExceptions(RuntimeException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+    }
+
+    @ExceptionHandler(SolrQueryException.class)
+    public ResponseEntity<Map> handleSolrQueryException(SolrQueryException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
