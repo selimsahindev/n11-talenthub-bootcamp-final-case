@@ -1,9 +1,11 @@
 package com.selimsahin.recommendationservice.consumer;
 
-import com.selimsahin.recommendationservice.event.RestaurantCreatedEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.selimsahin.recommendationservice.dto.RestaurantDTO;
+import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RestaurantConsumer {
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final RestaurantService restaurantSearchService;
+    private final ObjectMapper objectMapper;
 
     @KafkaListener(topics = "${kafka.topic.restaurant-created}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consume(ConsumerRecord<String, String> payload) {
+    public void consume(ConsumerRecord<String, String> payload) throws JsonProcessingException {
 
-        // Publish restaurant created event to the application.
-        eventPublisher.publishEvent(new RestaurantCreatedEvent(payload.value()));
+        RestaurantDTO restaurantDto = objectMapper.readValue(payload.value(), RestaurantDTO.class);
+        restaurantSearchService.saveRestaurantDocument(restaurantDto);
     }
 }

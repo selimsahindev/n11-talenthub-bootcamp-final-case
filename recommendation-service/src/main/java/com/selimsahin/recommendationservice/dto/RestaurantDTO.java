@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class RestaurantDTO {
 
-    private Long id;
+    private String id;
     private String name;
     private Double averageRating;
     private Location location;
