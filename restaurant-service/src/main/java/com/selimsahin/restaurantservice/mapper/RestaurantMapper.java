@@ -3,8 +3,10 @@ package com.selimsahin.restaurantservice.mapper;
 import com.selimsahin.restaurantservice.dto.RestaurantCreateRequest;
 import com.selimsahin.restaurantservice.dto.RestaurantResponse;
 import com.selimsahin.restaurantservice.entity.Restaurant;
+import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 /**

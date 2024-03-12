@@ -1,15 +1,15 @@
 package com.selimsahin.recommendationservice.controller;
 
+import com.selimsahin.recommendationservice.document.RestaurantDocument;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
 import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,10 +22,15 @@ public class RestaurantSearchController {
 
     private final RestaurantService restaurantService;
 
-    @PostMapping("/by-location")
-    public ResponseEntity<List<RestaurantSearchResponse>> searchByLocation(
-            @RequestBody RestaurantSearchRequest request) {
+    @GetMapping
+    public ResponseEntity<List<RestaurantDocument>> findAll() {
+        return ResponseEntity.ok(restaurantService.getAllRestaurants());
+    }
 
-        return ResponseEntity.ok(restaurantService.getRestaurantsByLocation(request));
+    @GetMapping("/by-location-near")
+    public ResponseEntity<List<RestaurantSearchResponse>> searchByLocationNear(
+            @ModelAttribute RestaurantSearchRequest request) {
+
+        return ResponseEntity.ok(restaurantService.getRestaurantsByLocationNear(request));
     }
 }

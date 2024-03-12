@@ -1,5 +1,6 @@
 package com.selimsahin.userservice.exception.handler;
 
+import com.selimsahin.userservice.exception.RestaurantNotFoundException;
 import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.exception.UserReviewNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,15 @@ public class GeneralControllerAdvice {
 
     @ExceptionHandler(UserReviewNotFoundException.class)
     public ResponseEntity<Map> handleUserReviewNotFoundException(UserReviewNotFoundException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<Map> handleRestaurantNotFoundException(RestaurantNotFoundException exception) {
 
         Map<String, String> response = new HashMap<>();
         response.put("message", exception.getMessage());
