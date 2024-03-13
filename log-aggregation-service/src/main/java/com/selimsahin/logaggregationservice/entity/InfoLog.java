@@ -1,25 +1,28 @@
 package com.selimsahin.logaggregationservice.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 /**
  * @author selimsahindev
  */
-@Entity
-@Table(name = "info_logs")
+@Document(collection = "info_logs")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class InfoLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private LocalDateTime date;
     private String message;
     private String description;
+
+    private LocalDateTime createdAt;
 }

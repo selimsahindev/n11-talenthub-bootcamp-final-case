@@ -1,7 +1,6 @@
 package com.selimsahin.recommendationservice.service.impl;
 
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
-import com.selimsahin.recommendationservice.dto.Location;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
 import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
@@ -27,8 +26,8 @@ import java.util.List;
  * @author selimsahindev
  */
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
@@ -54,7 +53,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .toList();
 
         } catch (SolrServerException | IOException e) {
-            // Handle exceptions appropriately
             throw new SolrQueryException("Failed to retrieve restaurants from Solr");
         }
     }
@@ -79,17 +77,9 @@ public class RestaurantServiceImpl implements RestaurantService {
             List<RestaurantSearchResponse> restaurantSearchResponses = new ArrayList<>();
 
             for (SolrDocument doc : solrDocuments) {
-                double[] location = getLatLong((String) doc.getFieldValue("location"));
-
-                RestaurantSearchResponse responseDto = new RestaurantSearchResponse(
-                        (String) doc.getFieldValue("id"),
-                        (String) doc.getFieldValue("name"),
-                        (Double) doc.getFieldValue("average_rating"),
-                        new Location(location[0], location[1])
-                );
-                restaurantSearchResponses.add(responseDto);
+                RestaurantDocument restaurantDocument = RestaurantDocument.fromSolrDocument(doc);
+                restaurantSearchResponses.add(restaurantMapper.mapToRestaurantSearchResponse(restaurantDocument));
             }
-
             return restaurantSearchResponses;
 
         } catch (Exception e) {
@@ -100,8 +90,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void saveRestaurantDocument(RestaurantDTO restaurantDto) {
 
-        RestaurantDocument restaurantDocument = restaurantMapper.restaurantDtoToDocument(restaurantDto);
-
+        RestaurantDocument restaurantDocument = restaurantMapper.mapToRestaurantDocument(restaurantDto);
         restaurantRepository.save(restaurantDocument);
 
         log.info("Restaurant saved to Solr: {}", restaurantDocument);
@@ -109,9 +98,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     private double[] getLatLong(String latLong) {
         String[] latLongStr = latLong.split(",");
-        double[] result = new double[2];
-        result[0] = Double.parseDouble(latLongStr[0]);
-        result[1] = Double.parseDouble(latLongStr[1]);
-        return result;
+        return new double[] {
+            Double.parseDouble(latLongStr[0]),
+            Double.parseDouble(latLongStr[1])
+        };
     }
 }

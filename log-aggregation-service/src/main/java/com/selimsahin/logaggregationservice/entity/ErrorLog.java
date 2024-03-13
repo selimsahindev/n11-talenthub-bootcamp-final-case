@@ -1,23 +1,22 @@
 package com.selimsahin.logaggregationservice.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 /**
  * @author selimsahindev
  */
-@Entity
-@Table(name = "error_logs")
+@Document(collection = "error_logs")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class ErrorLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private LocalDateTime date;
     private String message;

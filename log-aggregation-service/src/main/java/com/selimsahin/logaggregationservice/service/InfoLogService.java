@@ -1,11 +1,15 @@
 package com.selimsahin.logaggregationservice.service;
 
-import com.selimsahin.logaggregationservice.entity.InfoLog;
+import com.selimsahin.logaggregationservice.dto.InfoLogDTO;
+
+import java.util.List;
 
 /**
  * @author selimsahindev
  */
 public interface InfoLogService {
 
-    void createInfoLog(InfoLog infoLog);
+    List<InfoLogDTO> getAllInfoLogs();
+
+    void createInfoLog(InfoLogDTO infoLog);
 }
