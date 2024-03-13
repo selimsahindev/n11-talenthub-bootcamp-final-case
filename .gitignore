@@ -1,4 +1,8 @@
 *.DS_Store
 *.idea
+
+# Docker Volumes
 data
+solr-data
+mongodb-data
 
