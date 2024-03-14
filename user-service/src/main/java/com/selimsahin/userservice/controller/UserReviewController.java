@@ -1,13 +1,8 @@
 package com.selimsahin.userservice.controller;
 
-import com.selimsahin.userservice.client.RestaurantServiceClient;
-import com.selimsahin.userservice.dto.RestaurantInfoDTO;
-import com.selimsahin.userservice.dto.UserResponse;
 import com.selimsahin.userservice.dto.UserReviewCreateRequest;
 import com.selimsahin.userservice.dto.UserReviewDetailDTO;
-import com.selimsahin.userservice.exception.RestaurantNotFoundException;
 import com.selimsahin.userservice.service.UserReviewService;
-import com.selimsahin.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserReviewController {
 
-    private final UserService userService;
     private final UserReviewService userReviewService;
-    private final RestaurantServiceClient restaurantServiceClient;
 
     @GetMapping
     public ResponseEntity<List<UserReviewDetailDTO>> findAll() {
@@ -44,20 +37,7 @@ public class UserReviewController {
 
     @PostMapping
     public ResponseEntity<Void> createUserReview(@RequestBody @Valid UserReviewCreateRequest request) {
-
-        // This will throw an exception if user not found.
-        UserResponse userResponse = userService.getUserById(request.userId());
-
-        // Fetch restaurant info from restaurant-service.
-        ResponseEntity<RestaurantInfoDTO> response = restaurantServiceClient.getRestaurantById(request.restaurantId());
-
-        // If restaurant not found, throw an exception.
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RestaurantNotFoundException("Restaurant not found with id: " + request.restaurantId());
-        }
-
         userReviewService.create(request);
-
         return ResponseEntity.status(201).build();
     }
 }

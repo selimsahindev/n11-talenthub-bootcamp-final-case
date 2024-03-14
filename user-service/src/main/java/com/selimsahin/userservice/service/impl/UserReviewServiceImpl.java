@@ -1,8 +1,13 @@
 package com.selimsahin.userservice.service.impl;
 
+import com.selimsahin.userservice.client.RestaurantServiceClient;
+import com.selimsahin.userservice.dto.RestaurantInfoDTO;
+import com.selimsahin.userservice.dto.UserResponse;
 import com.selimsahin.userservice.dto.UserReviewCreateRequest;
 import com.selimsahin.userservice.dto.UserReviewDetailDTO;
 import com.selimsahin.userservice.entity.UserReview;
+import com.selimsahin.userservice.exception.RestaurantNotFoundException;
+import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.exception.UserReviewNotFoundException;
 import com.selimsahin.userservice.mapper.UserReviewMapper;
 import com.selimsahin.userservice.producer.KafkaProducer;
@@ -10,6 +15,7 @@ import com.selimsahin.userservice.repository.UserReviewRepository;
 import com.selimsahin.userservice.service.UserReviewService;
 import com.selimsahin.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,15 +32,19 @@ public class UserReviewServiceImpl implements UserReviewService {
     private final UserReviewMapper userReviewMapper;
     private final UserService userService;
     private final KafkaProducer userReviewProducerService;
+    private final RestaurantServiceClient restaurantServiceClient;
 
     @Override
     public UserReviewDetailDTO create(UserReviewCreateRequest request) {
 
+        validateUser(request.userId());
+        validateRestaurant(request.restaurantId());
+
         UserReview userReview = userReviewMapper.mapUserReviewCreateRequestToUserReview(request);
         userReview = userReviewRepository.save(userReview);
-
         UserReviewDetailDTO userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
 
+        // Update restaurant average rating and publish event to Kafka.
         updateRestaurantAverageRating(userReview.getRestaurantId());
 
         return userReviewDetailDTO;
@@ -79,5 +89,21 @@ public class UserReviewServiceImpl implements UserReviewService {
 
         // Publish restaurant average rating updated event to Kafka.
         userReviewProducerService.publishAverageRatingCalculatedEvent(restaurantId, averageRating);
+    }
+
+    private void validateUser(Long userId) {
+        UserResponse userResponse = userService.getUserById(userId);
+
+        if (userResponse == null) {
+            throw new UserNotFoundException("User not found with id: " + userId);
+        }
+    }
+
+    private void validateRestaurant(Long restaurantId) {
+        ResponseEntity<RestaurantInfoDTO> response = restaurantServiceClient.getRestaurantById(restaurantId);
+
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RestaurantNotFoundException("Restaurant not found with id: " + restaurantId);
+        }
     }
 }
