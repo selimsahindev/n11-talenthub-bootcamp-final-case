@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>x
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.selimsahin</groupId>
-	<artifactId>eureka-server</artifactId>
+	<artifactId>api-gateway</artifactId>
 	<version>1.0.0</version>
-	<name>eureka-server</name>
-	<description>This microservice implements a Eureka server for service discovery within our application.</description>
+	<name>api-gateway</name>
+	<description>This is the API Gateway service of the application.</description>
 
 	<properties>
 		<java.version>21</java.version>
@@ -22,10 +22,16 @@
 	</properties>
 
 	<dependencies>
-		<!-- Eureka Server -->
+		<!-- Spring Cloud Gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+		<!-- Eureka Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
 		<!-- Test -->
