@@ -13,6 +13,7 @@ import com.selimsahin.restaurantservice.kafka.producer.LogProducer;
 import com.selimsahin.restaurantservice.kafka.producer.RestaurantProducer;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
+import com.selimsahin.restaurantservice.util.AppLogger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -30,10 +31,10 @@ import java.util.Optional;
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
-    private final RestaurantMapper restaurantMapper;
     private final RestaurantProducer restaurantEventProducer;
-    private final LogProducer logProducerService;
+    private final RestaurantMapper restaurantMapper;
     private final ObjectMapper objectMapper;
+    private final AppLogger appLogger;
 
     @Override
     public void createRestaurant(RestaurantCreateRequest restaurantCreateRequest) {
@@ -43,11 +44,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         RestaurantResponse restaurantResponse = restaurantMapper.mapRestaurantToRestaurantResponse(restaurant);
 
+        appLogger.logInfo("Restaurant created", "Restaurant created with id: " + restaurant.getId());
+
         // Publish restaurant created event to Kafka
         restaurantEventProducer.publishRestaurantCreatedEvent(restaurantResponse);
-
-        // Publish log to Kafka
-        logProducerService.publishInfoLog("Restaurant created: " + restaurantResponse);
     }
 
     @Override
@@ -84,15 +84,17 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setAverageRating(newAverageRating);
         restaurantRepository.save(restaurant);
 
-        // Todo: publish average rating updated event to Kafka for recommendation service
+        appLogger.logInfo("Average rating updated", "Average rating updated for restaurant with id: " + restaurantId);
 
-        // Log the update
-        logProducerService.publishInfoLog("Average rating updated for Restaurant id: " + restaurantId + " to: " + newAverageRating);
+        // Todo: publish average rating updated event to Kafka for recommendation service
     }
 
     @Override
     public void deleteRestaurant(Long id) {
+
         restaurantRepository.deleteById(id);
+
+        appLogger.logInfo("Restaurant deleted", "Restaurant deleted with id: " + id);
     }
 
     @EventListener

@@ -23,10 +23,4 @@ public class InfoLogController {
     public ResponseEntity<List<InfoLogDTO>> getInfoLogs() {
         return ResponseEntity.ok(infoLogService.getAllInfoLogs());
     }
-
-    @PostMapping
-    public ResponseEntity<Void> createInfoLog(@RequestBody InfoLogDTO infoLogDto) {
-        infoLogService.createInfoLog(infoLogDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 }

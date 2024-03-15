@@ -1,7 +1,9 @@
 package com.selimsahin.logaggregationservice.service.impl;
 
 import com.selimsahin.logaggregationservice.dto.ErrorLogDTO;
+import com.selimsahin.logaggregationservice.dto.InfoLogDTO;
 import com.selimsahin.logaggregationservice.entity.ErrorLog;
+import com.selimsahin.logaggregationservice.entity.InfoLog;
 import com.selimsahin.logaggregationservice.repository.ErrorLogRepository;
 import com.selimsahin.logaggregationservice.service.ErrorLogService;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +22,32 @@ public class ErrorLogServiceImpl implements ErrorLogService {
 
     @Override
     public void createErrorLog(ErrorLogDTO errorLogDto) {
-        ErrorLog errorLog = ErrorLog.builder()
-                .date(errorLogDto.date())
+
+        // Todo: use MapStruct
+        ErrorLog errorLogEntity = ErrorLog.builder()
+                .service(errorLogDto.service())
+                .timestamp(errorLogDto.timestamp())
+                .status(errorLogDto.status())
+                .error(errorLogDto.error())
                 .message(errorLogDto.message())
-                .description(errorLogDto.description())
+                .stackTrace(errorLogDto.stackTrace())
                 .build();
 
-        errorLogRepository.save(errorLog);
+        errorLogRepository.save(errorLogEntity);
     }
 
     @Override
     public List<ErrorLogDTO> getAllErrorLogs() {
+
+        // Todo: use MapStruct
         return errorLogRepository.findAll().stream()
                 .map(errorLog -> ErrorLogDTO.builder()
-                        .id(errorLog.getId())
-                        .date(errorLog.getDate())
+                        .service(errorLog.getService())
+                        .timestamp(errorLog.getTimestamp())
+                        .status(errorLog.getStatus())
+                        .error(errorLog.getError())
                         .message(errorLog.getMessage())
-                        .description(errorLog.getDescription())
+                        .stackTrace(errorLog.getStackTrace())
                         .build())
                 .toList();
     }

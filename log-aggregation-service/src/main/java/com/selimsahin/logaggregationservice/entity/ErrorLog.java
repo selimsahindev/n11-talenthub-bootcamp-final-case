@@ -18,7 +18,10 @@ public class ErrorLog {
     @Id
     private String id;
 
-    private LocalDateTime date;
+    private String service;
+    private LocalDateTime timestamp;
+    private Integer status;
+    private String error;
     private String message;
-    private String description;
+    private String stackTrace;
 }
