@@ -19,24 +19,29 @@ public class InfoLogServiceImpl implements InfoLogService {
     private final InfoLogRepository infoLogRepository;
 
     @Override
-    public void createInfoLog(InfoLogDTO errorLogDto) {
-        InfoLog errorLog = InfoLog.builder()
-                .date(errorLogDto.date())
-                .message(errorLogDto.message())
-                .description(errorLogDto.description())
+    public void createInfoLog(InfoLogDTO infoLog) {
+
+        // Todo: use MapStruct
+        InfoLog infoLogEntity = InfoLog.builder()
+                .service(infoLog.service())
+                .timestamp(infoLog.timestamp())
+                .message(infoLog.message())
+                .description(infoLog.description())
                 .build();
 
-        infoLogRepository.save(errorLog);
+        infoLogRepository.save(infoLogEntity);
     }
 
     @Override
     public List<InfoLogDTO> getAllInfoLogs() {
+
+        // Todo: use MapStruct
         return infoLogRepository.findAll().stream()
-                .map(errorLog -> InfoLogDTO.builder()
-                        .id(errorLog.getId())
-                        .date(errorLog.getDate())
-                        .message(errorLog.getMessage())
-                        .description(errorLog.getDescription())
+                .map(infoLog -> InfoLogDTO.builder()
+                        .service(infoLog.getService())
+                        .timestamp(infoLog.getTimestamp())
+                        .message(infoLog.getMessage())
+                        .description(infoLog.getDescription())
                         .build())
                 .toList();
     }

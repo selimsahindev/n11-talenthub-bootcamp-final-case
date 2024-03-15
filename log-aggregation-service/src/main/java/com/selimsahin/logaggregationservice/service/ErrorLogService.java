@@ -1,6 +1,7 @@
 package com.selimsahin.logaggregationservice.service;
 
 import com.selimsahin.logaggregationservice.dto.ErrorLogDTO;
+import com.selimsahin.logaggregationservice.dto.InfoLogDTO;
 import com.selimsahin.logaggregationservice.entity.ErrorLog;
 
 import java.util.List;

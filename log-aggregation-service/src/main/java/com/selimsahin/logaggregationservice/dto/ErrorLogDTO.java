@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
  */
 @Builder
 public record ErrorLogDTO (
-
-        String id,
-        LocalDateTime date,
+        String service,
+        LocalDateTime timestamp,
+        Integer status,
+        String error,
         String message,
-        String description
+        String stackTrace
 ) {
 }

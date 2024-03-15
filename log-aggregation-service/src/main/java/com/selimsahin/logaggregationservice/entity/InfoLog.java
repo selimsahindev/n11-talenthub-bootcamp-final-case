@@ -20,9 +20,8 @@ public class InfoLog {
     @Id
     private String id;
 
-    private LocalDateTime date;
+    private String service;
+    private LocalDateTime timestamp;
     private String message;
     private String description;
-
-    private LocalDateTime createdAt;
 }

@@ -23,10 +23,4 @@ public class ErrorLogController {
     public ResponseEntity<List<ErrorLogDTO>> getErrorLogs() {
         return ResponseEntity.ok(errorLogService.getAllErrorLogs());
     }
-
-    @PostMapping
-    public ResponseEntity<Void> createErrorLog(@RequestBody ErrorLogDTO errorLogDTO) {
-        errorLogService.createErrorLog(errorLogDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 }

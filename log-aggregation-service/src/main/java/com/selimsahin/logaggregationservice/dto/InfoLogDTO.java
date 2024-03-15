@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
  */
 @Builder
 public record InfoLogDTO(
-
-        String id,
-        LocalDateTime date,
+        String service,
+        LocalDateTime timestamp,
         String message,
         String description
 ) {

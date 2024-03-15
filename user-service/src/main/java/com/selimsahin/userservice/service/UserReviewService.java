@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface UserReviewService {
 
-    UserReviewDetailDTO create(UserReviewCreateRequest request);
+    UserReviewDetailDTO createUserReview(UserReviewCreateRequest request);
 
-    List<UserReviewDetailDTO> findAll();
+    List<UserReviewDetailDTO> getAllUserReviews();
 
-    UserReviewDetailDTO findById(Long id);
+    UserReviewDetailDTO getUserReviewById(Long id);
 
-    List<UserReviewDetailDTO> findAllByUserId(Long userId);
+    List<UserReviewDetailDTO> getAllUserReviewsByUserId(Long userId);
 }

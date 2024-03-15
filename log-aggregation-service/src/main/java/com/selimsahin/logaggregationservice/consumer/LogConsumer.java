@@ -5,6 +5,7 @@ import com.selimsahin.logaggregationservice.dto.InfoLogDTO;
 import com.selimsahin.logaggregationservice.service.ErrorLogService;
 import com.selimsahin.logaggregationservice.service.InfoLogService;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -21,26 +22,38 @@ public class LogConsumer {
     private final InfoLogService infoLogService;
 
     @KafkaListener(topics = "${kafka.topic.error-log}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consumeErrorLog(String message){
+    public void consumeErrorLog(ConsumerRecord<String, String> message){
 
-        ErrorLogDTO errorLogDto = ErrorLogDTO.builder()
-                .date(LocalDateTime.now())
-                .message(message)
-                .description("Error")
-                .build();
+        try {
+            ErrorLogDTO errorLog = ErrorLogDTO.builder()
+                    .service(message.key())
+                    .timestamp(LocalDateTime.now())
+                    .status(200)
+                    .error(message.value())
+                    .message(message.value())
+                    .stackTrace(message.value())
+                    .build();
 
-        errorLogService.createErrorLog(errorLogDto);
+            errorLogService.createErrorLog(errorLog);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @KafkaListener(topics = "${kafka.topic.info-log}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consumeInfoLog(String message){
+    public void consumeInfoLog(ConsumerRecord<String, String> message){
 
-        InfoLogDTO infoLog = InfoLogDTO.builder()
-                .date(LocalDateTime.now())
-                .message(message)
-                .description("Info")
-                .build();
+        try {
+            InfoLogDTO infoLog = InfoLogDTO.builder()
+                    .service(message.key())
+                    .timestamp(LocalDateTime.now())
+                    .message(message.value())
+                    .description(message.value())
+                    .build();
 
-        infoLogService.createInfoLog(infoLog);
+            infoLogService.createInfoLog(infoLog);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
