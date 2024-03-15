@@ -4,8 +4,10 @@ import com.selimsahin.userservice.dto.Location;
 import com.selimsahin.userservice.enums.UserStatus;
 import com.selimsahin.userservice.entity.common.Auditable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
@@ -26,16 +28,19 @@ public class User extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required.")
+    @NotBlank(message = "Name is required")
     @Column(name = "name", length = 80, nullable = false)
+    @Size(min = 2, max = 80, message = "Name must be between 2 and 80 characters")
     private String name;
 
-    @NotNull(message = "Surname is required.")
+    @NotNull(message = "Surname is required")
     @Column(name = "surname", length = 80, nullable = false)
+    @Size(min = 2, max = 80, message = "Surname must be between 2 and 80 characters")
     private String surname;
 
-    @NotBlank(message = "Email is required.")
+    @NotBlank(message = "Email is required")
     @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Email(message = "Email is not valid")
     private String email;
 
     @Embedded

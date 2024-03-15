@@ -2,9 +2,9 @@ package com.selimsahin.userservice.service.impl;
 
 import com.selimsahin.userservice.client.RestaurantServiceClient;
 import com.selimsahin.userservice.dto.RestaurantInfoDTO;
-import com.selimsahin.userservice.dto.UserResponse;
-import com.selimsahin.userservice.dto.UserReviewCreateRequest;
-import com.selimsahin.userservice.dto.UserReviewDetailDTO;
+import com.selimsahin.userservice.dto.response.UserReviewResponse;
+import com.selimsahin.userservice.dto.response.UserResponse;
+import com.selimsahin.userservice.dto.request.UserReviewCreateRequest;
 import com.selimsahin.userservice.entity.UserReview;
 import com.selimsahin.userservice.exception.RestaurantNotFoundException;
 import com.selimsahin.userservice.exception.UserNotFoundException;
@@ -37,14 +37,14 @@ public class UserReviewServiceImpl implements UserReviewService {
     private final AppLogger appLogger;
 
     @Override
-    public UserReviewDetailDTO createUserReview(UserReviewCreateRequest request) {
+    public UserReviewResponse createUserReview(UserReviewCreateRequest request) {
 
         validateUser(request.userId());
         validateRestaurant(request.restaurantId());
 
         UserReview userReview = userReviewMapper.mapUserReviewCreateRequestToUserReview(request);
         userReview = userReviewRepository.save(userReview);
-        UserReviewDetailDTO userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
+        UserReviewResponse userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
 
         // Update restaurant average rating and publish event to Kafka.
         updateRestaurantAverageRating(userReview.getRestaurantId());
@@ -56,7 +56,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     }
 
     @Override
-    public List<UserReviewDetailDTO> getAllUserReviews() {
+    public List<UserReviewResponse> getAllUserReviews() {
 
         return userReviewRepository.findAll().stream()
                 .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
@@ -64,7 +64,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     }
 
     @Override
-    public UserReviewDetailDTO getUserReviewById(Long id) {
+    public UserReviewResponse getUserReviewById(Long id) {
 
         Optional<UserReview> userReviewOptional = userReviewRepository.findById(id);
 
@@ -76,7 +76,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     }
 
     @Override
-    public List<UserReviewDetailDTO> getAllUserReviewsByUserId(Long userId) {
+    public List<UserReviewResponse> getAllUserReviewsByUserId(Long userId) {
 
         // Check if the user exists.
         userService.getUserById(userId);

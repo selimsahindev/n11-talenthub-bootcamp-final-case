@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.mapper;
 
-import com.selimsahin.userservice.dto.UserReviewCreateRequest;
-import com.selimsahin.userservice.dto.UserReviewDetailDTO;
+import com.selimsahin.userservice.dto.response.UserReviewResponse;
+import com.selimsahin.userservice.dto.request.UserReviewCreateRequest;
 import com.selimsahin.userservice.entity.UserReview;
 import com.selimsahin.userservice.enums.UserRating;
 import org.mapstruct.Mapper;
@@ -24,7 +24,7 @@ public interface UserReviewMapper {
     @Mapping(source = "restaurantId", target = "restaurantId")
     @Mapping(source = "rate", target = "rate")
     @Mapping(source = "comment", target = "comment")
-    UserReviewDetailDTO mapUserReviewToUserReviewDetailDTO(UserReview userReview);
+    UserReviewResponse mapUserReviewToUserReviewDetailDTO(UserReview userReview);
 
 
     @Named("mapIntToUserRating")

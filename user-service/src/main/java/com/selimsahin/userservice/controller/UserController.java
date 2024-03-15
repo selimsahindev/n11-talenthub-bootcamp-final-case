@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.controller;
 
-import com.selimsahin.userservice.dto.UserCreateRequest;
-import com.selimsahin.userservice.dto.UserResponse;
+import com.selimsahin.userservice.dto.response.UserResponse;
+import com.selimsahin.userservice.dto.request.UserCreateRequest;
 import com.selimsahin.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

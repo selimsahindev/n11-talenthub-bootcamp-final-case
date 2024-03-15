@@ -1,5 +1,6 @@
-package com.selimsahin.userservice.dto;
+package com.selimsahin.userservice.dto.response;
 
+import com.selimsahin.userservice.dto.Location;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -5,6 +5,7 @@ import com.selimsahin.userservice.enums.UserRating;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,9 +35,8 @@ public class UserReview extends Auditable {
     @Column(name = "rate", length = 30, nullable = false)
     private UserRating rate;
 
-    @NotBlank(message = "Comment is required.")
     @Column(name = "comment", length = 200, nullable = false)
-    private String comment;
+    private String comment = "";
 
     @Override
     public boolean equals(Object obj) {

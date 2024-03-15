@@ -1,5 +1,6 @@
-package com.selimsahin.userservice.dto;
+package com.selimsahin.userservice.dto.request;
 
+import com.selimsahin.userservice.dto.Location;
 import com.selimsahin.userservice.enums.UserStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

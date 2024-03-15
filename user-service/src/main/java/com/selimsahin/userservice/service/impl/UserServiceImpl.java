@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.UserCreateRequest;
-import com.selimsahin.userservice.dto.UserResponse;
+import com.selimsahin.userservice.dto.request.UserCreateRequest;
+import com.selimsahin.userservice.dto.response.UserResponse;
 import com.selimsahin.userservice.entity.User;
 import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.mapper.UserMapper;

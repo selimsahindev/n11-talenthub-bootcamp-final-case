@@ -36,7 +36,7 @@ public class AppLogger {
             .build();
 
         logProducer.produceErrorLog(errorLogDTO);
-        log.error("Error log produced: " + errorLogDTO);
+        log.error("Error log produced: " + errorLogDTO.message());
     }
 
     public void logInfo(String message, String description) {
@@ -49,7 +49,7 @@ public class AppLogger {
                 .build();
 
         logProducer.produceInfoLog(infoLogDTO);
-        log.info("Info log produced: " + infoLogDTO);
+        log.info("Info log produced: " + infoLogDTO.message());
     }
 
     private String convertStackTraceToString(StackTraceElement[] stackTrace) {

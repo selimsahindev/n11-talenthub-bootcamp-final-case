@@ -3,6 +3,9 @@ package com.selimsahin.restaurantservice.entity;
 import com.selimsahin.restaurantservice.dto.Location;
 import com.selimsahin.restaurantservice.entity.common.Auditable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +22,8 @@ public class Restaurant extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @Size(max = 120, message = "Name must be maximum 120 characters")
     @Column(name = "name", length = 120, nullable = false)
     private String name;
 
