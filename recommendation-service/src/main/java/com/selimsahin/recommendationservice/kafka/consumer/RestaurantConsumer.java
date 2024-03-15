@@ -1,4 +1,4 @@
-package com.selimsahin.recommendationservice.consumer;
+package com.selimsahin.recommendationservice.kafka.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

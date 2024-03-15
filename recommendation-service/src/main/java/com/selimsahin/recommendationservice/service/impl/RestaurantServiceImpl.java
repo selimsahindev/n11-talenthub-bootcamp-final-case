@@ -8,8 +8,8 @@ import com.selimsahin.recommendationservice.exception.SolrQueryException;
 import com.selimsahin.recommendationservice.mapper.RestaurantMapper;
 import com.selimsahin.recommendationservice.repository.RestaurantRepository;
 import com.selimsahin.recommendationservice.service.RestaurantService;
+import com.selimsahin.recommendationservice.util.AppLogger;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -26,13 +26,13 @@ import java.util.List;
  * @author selimsahindev
  */
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
     private final SolrClient solrClient;
+    private final AppLogger appLogger;
 
     @Override
     public List<RestaurantDocument> getAllRestaurants() {
@@ -93,7 +93,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         RestaurantDocument restaurantDocument = restaurantMapper.mapToRestaurantDocument(restaurantDto);
         restaurantRepository.save(restaurantDocument);
 
-        log.info("Restaurant saved to Solr: {}", restaurantDocument);
+        appLogger.logInfo("Restaurant saved to Solr", "Restaurant saved to Solr: " + restaurantDocument);
     }
 
     private double[] getLatLong(String latLong) {

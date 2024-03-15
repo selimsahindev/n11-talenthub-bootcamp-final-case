@@ -4,6 +4,7 @@ import com.selimsahin.restaurantservice.dto.ErrorLogDTO;
 import com.selimsahin.restaurantservice.dto.InfoLogDTO;
 import com.selimsahin.restaurantservice.kafka.producer.LogProducer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
  * @author selimsahindev
  */
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class AppLogger {
 
@@ -34,6 +36,7 @@ public class AppLogger {
             .build();
 
         logProducer.produceErrorLog(errorLogDTO);
+        log.error("Error log produced: " + errorLogDTO);
     }
 
     public void logInfo(String message, String description) {
@@ -46,6 +49,7 @@ public class AppLogger {
                 .build();
 
         logProducer.produceInfoLog(infoLogDTO);
+        log.info("Info log produced: " + infoLogDTO);
     }
 
     private String convertStackTraceToString(StackTraceElement[] stackTrace) {

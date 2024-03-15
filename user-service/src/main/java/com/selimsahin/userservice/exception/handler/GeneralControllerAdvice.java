@@ -81,7 +81,7 @@ public class GeneralControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
 
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", System.currentTimeMillis());
@@ -89,13 +89,13 @@ public class GeneralControllerAdvice {
         response.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
 
         // Extracting and showing only the default message for Range constraint violation
-        if (ex.getBindingResult().getFieldError("rate") != null) {
-            response.put(messageKey, ex.getBindingResult().getFieldError("rate").getDefaultMessage());
+        if (exception.getBindingResult().getFieldError("rate") != null) {
+            response.put(messageKey, exception.getBindingResult().getFieldError("rate").getDefaultMessage());
         } else {
             response.put(messageKey, "Validation failed. Please check your request.");
         }
 
-        appLogger.logError(ex);
+        appLogger.logError(exception);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

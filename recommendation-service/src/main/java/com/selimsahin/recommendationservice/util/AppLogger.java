@@ -1,8 +1,8 @@
-package com.selimsahin.userservice.util;
+package com.selimsahin.recommendationservice.util;
 
-import com.selimsahin.userservice.dto.ErrorLogDTO;
-import com.selimsahin.userservice.dto.InfoLogDTO;
-import com.selimsahin.userservice.producer.LogProducer;
+import com.selimsahin.recommendationservice.dto.ErrorLogDTO;
+import com.selimsahin.recommendationservice.dto.InfoLogDTO;
+import com.selimsahin.recommendationservice.kafka.producer.LogProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
