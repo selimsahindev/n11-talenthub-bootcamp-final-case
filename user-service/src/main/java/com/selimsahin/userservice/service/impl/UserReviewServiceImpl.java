@@ -14,6 +14,7 @@ import com.selimsahin.userservice.producer.KafkaProducer;
 import com.selimsahin.userservice.repository.UserReviewRepository;
 import com.selimsahin.userservice.service.UserReviewService;
 import com.selimsahin.userservice.service.UserService;
+import com.selimsahin.userservice.util.AppLogger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,14 +29,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserReviewServiceImpl implements UserReviewService {
 
+    private final RestaurantServiceClient restaurantServiceClient;
     private final UserReviewRepository userReviewRepository;
+    private final KafkaProducer userReviewProducerService;
     private final UserReviewMapper userReviewMapper;
     private final UserService userService;
-    private final KafkaProducer userReviewProducerService;
-    private final RestaurantServiceClient restaurantServiceClient;
+    private final AppLogger appLogger;
 
     @Override
-    public UserReviewDetailDTO create(UserReviewCreateRequest request) {
+    public UserReviewDetailDTO createUserReview(UserReviewCreateRequest request) {
 
         validateUser(request.userId());
         validateRestaurant(request.restaurantId());
@@ -47,11 +49,14 @@ public class UserReviewServiceImpl implements UserReviewService {
         // Update restaurant average rating and publish event to Kafka.
         updateRestaurantAverageRating(userReview.getRestaurantId());
 
+        // Send info log to Kafka
+        appLogger.logInfo("User review created","User review created with id: " + userReview.getId());
+
         return userReviewDetailDTO;
     }
 
     @Override
-    public List<UserReviewDetailDTO> findAll() {
+    public List<UserReviewDetailDTO> getAllUserReviews() {
 
         return userReviewRepository.findAll().stream()
                 .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
@@ -59,7 +64,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     }
 
     @Override
-    public UserReviewDetailDTO findById(Long id) {
+    public UserReviewDetailDTO getUserReviewById(Long id) {
 
         Optional<UserReview> userReviewOptional = userReviewRepository.findById(id);
 
@@ -71,7 +76,7 @@ public class UserReviewServiceImpl implements UserReviewService {
     }
 
     @Override
-    public List<UserReviewDetailDTO> findAllByUserId(Long userId) {
+    public List<UserReviewDetailDTO> getAllUserReviewsByUserId(Long userId) {
 
         // Check if the user exists.
         userService.getUserById(userId);
@@ -89,6 +94,8 @@ public class UserReviewServiceImpl implements UserReviewService {
 
         // Publish restaurant average rating updated event to Kafka.
         userReviewProducerService.publishAverageRatingCalculatedEvent(restaurantId, averageRating);
+
+        appLogger.logInfo("Restaurant average rating updated","Restaurant average rating updated with id: " + restaurantId + " and average rating: " + averageRating);
     }
 
     private void validateUser(Long userId) {

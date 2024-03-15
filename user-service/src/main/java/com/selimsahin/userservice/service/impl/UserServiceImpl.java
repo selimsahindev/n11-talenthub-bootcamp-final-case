@@ -7,6 +7,7 @@ import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.mapper.UserMapper;
 import com.selimsahin.userservice.repository.UserRepository;
 import com.selimsahin.userservice.service.UserService;
+import com.selimsahin.userservice.util.AppLogger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +25,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AppLogger appLogger;
 
     @Override
     public void createUser(UserCreateRequest request) {
 
         User user = userMapper.mapUserCreateRequestToUser(request);
         userRepository.save(user);
+
+        appLogger.logInfo("User created","User created with id: " + user.getId());
     }
 
     @Override
@@ -69,11 +73,16 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDetails.getEmail());
         userRepository.save(user);
 
+        appLogger.logInfo("User updated","User updated with id: " + user.getId());
+
         return userMapper.mapToUserResponse(user);
     }
 
     @Override
     public void deleteUser(Long id) {
+
         userRepository.deleteById(id);
+
+        appLogger.logInfo("User deleted","User deleted with id: " + id);
     }
 }

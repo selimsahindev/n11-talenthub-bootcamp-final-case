@@ -1,8 +1,11 @@
 package com.selimsahin.userservice.exception.handler;
 
+import com.selimsahin.userservice.exception.LogProducerException;
 import com.selimsahin.userservice.exception.RestaurantNotFoundException;
 import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.exception.UserReviewNotFoundException;
+import com.selimsahin.userservice.util.AppLogger;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,22 +19,41 @@ import java.util.Map;
  * @author selimsahindev
  */
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GeneralControllerAdvice {
+
+    private final AppLogger appLogger;
+    private final String messageKey = "message";
 
     @ExceptionHandler
     public ResponseEntity<Map> handleAllExceptions(RuntimeException exception) {
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", exception.getMessage());
+        response.put(messageKey, exception.getMessage());
+
+        appLogger.logError(exception);
 
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+    }
+
+    @ExceptionHandler(LogProducerException.class)
+    public ResponseEntity<Map> handleLogProducerException(LogProducerException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put(messageKey, exception.getMessage());
+
+        appLogger.logError(exception);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map> handleUserNotFoundException(UserNotFoundException exception) {
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", exception.getMessage());
+        response.put(messageKey, exception.getMessage());
+
+        appLogger.logError(exception);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -40,7 +62,9 @@ public class GeneralControllerAdvice {
     public ResponseEntity<Map> handleUserReviewNotFoundException(UserReviewNotFoundException exception) {
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", exception.getMessage());
+        response.put(messageKey, exception.getMessage());
+
+        appLogger.logError(exception);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -49,7 +73,9 @@ public class GeneralControllerAdvice {
     public ResponseEntity<Map> handleRestaurantNotFoundException(RestaurantNotFoundException exception) {
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", exception.getMessage());
+        response.put(messageKey, exception.getMessage());
+
+        appLogger.logError(exception);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -64,10 +90,12 @@ public class GeneralControllerAdvice {
 
         // Extracting and showing only the default message for Range constraint violation
         if (ex.getBindingResult().getFieldError("rate") != null) {
-            response.put("message", ex.getBindingResult().getFieldError("rate").getDefaultMessage());
+            response.put(messageKey, ex.getBindingResult().getFieldError("rate").getDefaultMessage());
         } else {
-            response.put("message", "Validation failed. Please check your request.");
+            response.put(messageKey, "Validation failed. Please check your request.");
         }
+
+        appLogger.logError(ex);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
