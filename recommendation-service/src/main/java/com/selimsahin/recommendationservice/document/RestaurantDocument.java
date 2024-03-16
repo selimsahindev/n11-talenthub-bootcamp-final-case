@@ -1,13 +1,10 @@
 package com.selimsahin.recommendationservice.document;
 
-import com.selimsahin.recommendationservice.dto.Location;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.solr.core.geo.Point;
-import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
 import javax.validation.constraints.*;
