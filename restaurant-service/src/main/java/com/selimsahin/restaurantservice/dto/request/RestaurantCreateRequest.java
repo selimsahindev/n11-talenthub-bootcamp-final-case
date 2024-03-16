@@ -1,5 +1,6 @@
-package com.selimsahin.restaurantservice.dto;
+package com.selimsahin.restaurantservice.dto.request;
 
+import com.selimsahin.restaurantservice.dto.Location;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -28,12 +28,14 @@ public class UserServiceImpl implements UserService {
     private final AppLogger appLogger;
 
     @Override
-    public void createUser(UserCreateRequest request) {
+    public UserResponse createUser(UserCreateRequest request) {
 
         User user = userMapper.mapUserCreateRequestToUser(request);
-        userRepository.save(user);
+        user = userRepository.save(user);
 
         appLogger.logInfo("User created","User created with id: " + user.getId());
+
+        return userMapper.mapToUserResponse(user);
     }
 
     @Override

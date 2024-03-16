@@ -1,4 +1,4 @@
-package com.selimsahin.recommendationservice.dto;
+package com.selimsahin.recommendationservice.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;

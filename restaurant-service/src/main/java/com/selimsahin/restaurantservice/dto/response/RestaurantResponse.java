@@ -1,4 +1,6 @@
-package com.selimsahin.restaurantservice.dto;
+package com.selimsahin.restaurantservice.dto.response;
+
+import com.selimsahin.restaurantservice.dto.Location;
 
 /**
  * @author selimsahindev

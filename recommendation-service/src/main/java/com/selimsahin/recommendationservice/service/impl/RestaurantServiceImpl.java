@@ -2,8 +2,8 @@ package com.selimsahin.recommendationservice.service.impl;
 
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
-import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
-import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import com.selimsahin.recommendationservice.dto.request.RestaurantSearchRequest;
+import com.selimsahin.recommendationservice.dto.response.RestaurantSearchResponse;
 import com.selimsahin.recommendationservice.exception.SolrQueryException;
 import com.selimsahin.recommendationservice.mapper.RestaurantMapper;
 import com.selimsahin.recommendationservice.repository.RestaurantRepository;
@@ -35,7 +35,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final AppLogger appLogger;
 
     @Override
-    public List<RestaurantDocument> getAllRestaurants() {
+    public List<RestaurantSearchResponse> getAllRestaurants() {
 
         try {
             SolrQuery query = new SolrQuery("*:*"); // Empty query fetches all documents
@@ -45,14 +45,11 @@ public class RestaurantServiceImpl implements RestaurantService {
             query.addField("location");
 
             QueryResponse response = solrClient.query("restaurants", query); // Specify the collection name
+            SolrDocumentList solrDocuments = response.getResults();
 
-            SolrDocumentList results = response.getResults();
+            return getRestaurantSearchResponses(solrDocuments);
 
-            return results.stream()
-                    .map(RestaurantDocument::fromSolrDocument)
-                    .toList();
-
-        } catch (SolrServerException | IOException e) {
+        } catch (Exception e) {
             throw new SolrQueryException("Failed to retrieve restaurants from Solr");
         }
     }
@@ -74,13 +71,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
             QueryResponse queryResponse = solrClient.query("restaurants", query);
             SolrDocumentList solrDocuments = queryResponse.getResults();
-            List<RestaurantSearchResponse> restaurantSearchResponses = new ArrayList<>();
 
-            for (SolrDocument doc : solrDocuments) {
-                RestaurantDocument restaurantDocument = RestaurantDocument.fromSolrDocument(doc);
-                restaurantSearchResponses.add(restaurantMapper.mapToRestaurantSearchResponse(restaurantDocument));
-            }
-            return restaurantSearchResponses;
+            return getRestaurantSearchResponses(solrDocuments);
 
         } catch (Exception e) {
             throw new SolrQueryException("Failed to retrieve restaurants from Solr");
@@ -96,11 +88,26 @@ public class RestaurantServiceImpl implements RestaurantService {
         appLogger.logInfo("Restaurant saved to Solr", "Restaurant saved to Solr: " + restaurantDocument);
     }
 
+    // Helper method to parse latitude and longitude from the request
     private double[] getLatLong(String latLong) {
+
         String[] latLongStr = latLong.split(",");
+
         return new double[] {
             Double.parseDouble(latLongStr[0]),
             Double.parseDouble(latLongStr[1])
         };
+    }
+
+    // Helper method to map Solr documents to RestaurantSearchResponse
+    private List<RestaurantSearchResponse> getRestaurantSearchResponses(SolrDocumentList solrDocuments) {
+
+        List<RestaurantSearchResponse> restaurantSearchResponses = new ArrayList<>();
+
+        for (SolrDocument doc : solrDocuments) {
+            RestaurantDocument restaurantDocument = RestaurantDocument.fromSolrDocument(doc);
+            restaurantSearchResponses.add(restaurantMapper.mapToRestaurantSearchResponse(restaurantDocument));
+        }
+        return restaurantSearchResponses;
     }
 }

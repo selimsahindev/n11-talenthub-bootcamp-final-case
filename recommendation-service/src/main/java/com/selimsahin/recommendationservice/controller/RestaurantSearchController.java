@@ -1,15 +1,14 @@
 package com.selimsahin.recommendationservice.controller;
 
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
-import com.selimsahin.recommendationservice.dto.RestaurantSearchRequest;
-import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import com.selimsahin.recommendationservice.dto.request.RestaurantSearchRequest;
+import com.selimsahin.recommendationservice.dto.response.RestResponse;
+import com.selimsahin.recommendationservice.dto.response.RestaurantSearchResponse;
 import com.selimsahin.recommendationservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,14 +22,17 @@ public class RestaurantSearchController {
     private final RestaurantService restaurantService;
 
     @GetMapping
-    public ResponseEntity<List<RestaurantDocument>> findAll() {
-        return ResponseEntity.ok(restaurantService.getAllRestaurants());
+    public ResponseEntity<RestResponse<List<RestaurantSearchResponse>>> findAll() {
+
+        List<RestaurantSearchResponse> restaurants = restaurantService.getAllRestaurants();
+        return ResponseEntity.ok(RestResponse.of(restaurants));
     }
 
     @GetMapping("/by-location-near")
-    public ResponseEntity<List<RestaurantSearchResponse>> searchByLocationNear(
+    public ResponseEntity<RestResponse<List<RestaurantSearchResponse>>> searchByLocationNear(
             @ModelAttribute RestaurantSearchRequest request) {
 
-        return ResponseEntity.ok(restaurantService.getRestaurantsByLocationNear(request));
+        List<RestaurantSearchResponse> restaurants = restaurantService.getRestaurantsByLocationNear(request);
+        return ResponseEntity.ok(RestResponse.of(restaurants));
     }
 }
