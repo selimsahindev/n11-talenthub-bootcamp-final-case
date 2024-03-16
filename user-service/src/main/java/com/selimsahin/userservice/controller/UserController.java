@@ -23,12 +23,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<RestResponse<List<UserResponse>>> getAllUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int limit
-    ) {
+    public ResponseEntity<RestResponse<List<UserResponse>>> getAllUsers() {
 
-        List<UserResponse> users = userService.getAllUsers(page, limit);
+        List<UserResponse> users = userService.getAllUsers();
         return ResponseEntity.ok(RestResponse.of(users));
     }
 
