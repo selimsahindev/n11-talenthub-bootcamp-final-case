@@ -2,12 +2,14 @@ package com.selimsahin.userservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 /**
  * @author selimsahindev
  */
+@Builder
 public record UserReviewCreateRequest (
 
         @NotNull(message = "User ID is required.")

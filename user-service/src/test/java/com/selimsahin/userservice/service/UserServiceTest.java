@@ -92,8 +92,7 @@ class UserServiceTest {
     }
 
     @Test
-    void
-    testCreateUser_throwsExceptionOnRepositoryError() {
+    void testCreateUser_throwsExceptionOnRepositoryError() {
 
         // Given
         UserCreateRequest mockRequest = createMockUserCreateRequest();
@@ -157,7 +156,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetUserById_throwsNotFoundExceptionForNonExistentId() {
+    void testGetUserById_throwsUserNotFoundExceptionForNonExistentId() {
 
         // Mock the calls
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());

@@ -1,19 +1,19 @@
 package com.selimsahin.userservice.dto.response;
 
 import com.selimsahin.userservice.enums.UserRating;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author selimsahindev
  */
-@Getter
-@Setter
-public class UserReviewResponse {
-
-    private Long id;
-    private Long userId;
-    private Long restaurantId;
-    private UserRating rate;
-    private String comment;
+@Builder
+public record UserReviewResponse (
+    Long id,
+    Long userId,
+    Long restaurantId,
+    UserRating rate,
+    String comment
+) {
 }
