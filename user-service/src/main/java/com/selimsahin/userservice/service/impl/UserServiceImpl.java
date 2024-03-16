@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service.impl;
 
-import com.selimsahin.userservice.dto.UserCreateRequest;
-import com.selimsahin.userservice.dto.UserResponse;
+import com.selimsahin.userservice.dto.request.UserCreateRequest;
+import com.selimsahin.userservice.dto.response.UserResponse;
 import com.selimsahin.userservice.entity.User;
 import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.mapper.UserMapper;
@@ -28,12 +28,14 @@ public class UserServiceImpl implements UserService {
     private final AppLogger appLogger;
 
     @Override
-    public void createUser(UserCreateRequest request) {
+    public UserResponse createUser(UserCreateRequest request) {
 
         User user = userMapper.mapUserCreateRequestToUser(request);
-        userRepository.save(user);
+        user = userRepository.save(user);
 
         appLogger.logInfo("User created","User created with id: " + user.getId());
+
+        return userMapper.mapToUserResponse(user);
     }
 
     @Override

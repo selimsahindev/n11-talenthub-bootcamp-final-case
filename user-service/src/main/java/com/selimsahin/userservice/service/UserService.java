@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service;
 
-import com.selimsahin.userservice.dto.UserCreateRequest;
-import com.selimsahin.userservice.dto.UserResponse;
+import com.selimsahin.userservice.dto.request.UserCreateRequest;
+import com.selimsahin.userservice.dto.response.UserResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    void createUser(UserCreateRequest request);
+    UserResponse createUser(UserCreateRequest request);
 
     List<UserResponse> getAllUsers(int page, int limit);
 

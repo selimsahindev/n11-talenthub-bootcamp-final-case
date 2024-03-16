@@ -1,5 +1,6 @@
-package com.selimsahin.recommendationservice.dto;
+package com.selimsahin.recommendationservice.dto.response;
 
+import com.selimsahin.recommendationservice.dto.Location;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

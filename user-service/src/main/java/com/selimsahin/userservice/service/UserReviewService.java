@@ -1,7 +1,7 @@
 package com.selimsahin.userservice.service;
 
-import com.selimsahin.userservice.dto.UserReviewCreateRequest;
-import com.selimsahin.userservice.dto.UserReviewDetailDTO;
+import com.selimsahin.userservice.dto.response.UserReviewResponse;
+import com.selimsahin.userservice.dto.request.UserReviewCreateRequest;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface UserReviewService {
 
-    UserReviewDetailDTO createUserReview(UserReviewCreateRequest request);
+    UserReviewResponse createUserReview(UserReviewCreateRequest request);
 
-    List<UserReviewDetailDTO> getAllUserReviews();
+    List<UserReviewResponse> getAllUserReviews();
 
-    UserReviewDetailDTO getUserReviewById(Long id);
+    UserReviewResponse getUserReviewById(Long id);
 
-    List<UserReviewDetailDTO> getAllUserReviewsByUserId(Long userId);
+    List<UserReviewResponse> getAllUserReviewsByUserId(Long userId);
 }

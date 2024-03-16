@@ -3,13 +3,12 @@ package com.selimsahin.restaurantservice.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.selimsahin.restaurantservice.dto.AverageRatingUpdateDTO;
-import com.selimsahin.restaurantservice.dto.RestaurantCreateRequest;
-import com.selimsahin.restaurantservice.dto.RestaurantResponse;
+import com.selimsahin.restaurantservice.dto.request.RestaurantCreateRequest;
+import com.selimsahin.restaurantservice.dto.response.RestaurantResponse;
 import com.selimsahin.restaurantservice.entity.Restaurant;
 import com.selimsahin.restaurantservice.event.AverageRatingUpdatedEvent;
 import com.selimsahin.restaurantservice.exception.RestaurantNotFoundException;
 import com.selimsahin.restaurantservice.mapper.RestaurantMapper;
-import com.selimsahin.restaurantservice.kafka.producer.LogProducer;
 import com.selimsahin.restaurantservice.kafka.producer.RestaurantProducer;
 import com.selimsahin.restaurantservice.repository.RestaurantRepository;
 import com.selimsahin.restaurantservice.service.RestaurantService;
@@ -37,7 +36,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final AppLogger appLogger;
 
     @Override
-    public void createRestaurant(RestaurantCreateRequest restaurantCreateRequest) {
+    public RestaurantResponse createRestaurant(RestaurantCreateRequest restaurantCreateRequest) {
 
         Restaurant restaurant = restaurantMapper.mapCreateRequestToRestaurant(restaurantCreateRequest);
         restaurant = restaurantRepository.save(restaurant);
@@ -48,6 +47,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         // Publish restaurant created event to Kafka
         restaurantEventProducer.publishRestaurantCreatedEvent(restaurantResponse);
+
+        return restaurantResponse;
     }
 
     @Override

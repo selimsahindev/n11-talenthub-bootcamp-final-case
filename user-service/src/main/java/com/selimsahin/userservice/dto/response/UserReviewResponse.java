@@ -1,4 +1,4 @@
-package com.selimsahin.userservice.dto;
+package com.selimsahin.userservice.dto.response;
 
 import com.selimsahin.userservice.enums.UserRating;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class UserReviewDetailDTO {
+public class UserReviewResponse {
 
     private Long id;
     private Long userId;

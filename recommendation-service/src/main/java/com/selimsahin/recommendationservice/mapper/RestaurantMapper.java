@@ -3,7 +3,7 @@ package com.selimsahin.recommendationservice.mapper;
 import com.selimsahin.recommendationservice.document.RestaurantDocument;
 import com.selimsahin.recommendationservice.dto.Location;
 import com.selimsahin.recommendationservice.dto.RestaurantDTO;
-import com.selimsahin.recommendationservice.dto.RestaurantSearchResponse;
+import com.selimsahin.recommendationservice.dto.response.RestaurantSearchResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

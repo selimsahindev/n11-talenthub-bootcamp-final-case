@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @author selimsahindev
  */
-@FeignClient("RESTAURANT-SERVICE/api/v1/restaurants")
+@FeignClient("restaurant-service/api/v1/restaurants")
 public interface RestaurantServiceClient {
 
     @GetMapping("/{id}")
