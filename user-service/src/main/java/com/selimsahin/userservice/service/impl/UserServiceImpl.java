@@ -39,11 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getAllUsers(int page, int limit) {
+    public List<UserResponse> getAllUsers() {
 
-        Page<User> userPage = userRepository.findAll(PageRequest.of(page, limit));
+        List<User> users = userRepository.findAll();
 
-        return userPage.getContent().stream()
+        return users.stream()
                 .map(userMapper::mapToUserResponse)
                 .toList();
     }
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(Long id, UserCreateRequest userDetails) {
+    public UserResponse updateUser(Long id, UserCreateRequest request) {
 
         Optional<User> userOptional = userRepository.findById(id);
 
@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userOptional.get();
-        user.setName(userDetails.getName());
-        user.setSurname(userDetails.getSurname());
-        user.setEmail(userDetails.getEmail());
+        user.setName(request.name());
+        user.setSurname(request.surname());
+        user.setEmail(request.email());
         userRepository.save(user);
 
         appLogger.logInfo("User updated","User updated with id: " + user.getId());

@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 /**
  * @author selimsahindev
  */
@@ -24,8 +26,13 @@ public interface UserReviewMapper {
     @Mapping(source = "restaurantId", target = "restaurantId")
     @Mapping(source = "rate", target = "rate")
     @Mapping(source = "comment", target = "comment")
-    UserReviewResponse mapUserReviewToUserReviewDetailDTO(UserReview userReview);
+    UserReviewResponse mapUserReviewToUserReviewResponse(UserReview userReview);
 
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "restaurantId", target = "restaurantId")
+    @Mapping(source = "rate", target = "rate")
+    @Mapping(source = "comment", target = "comment")
+    List<UserReviewResponse> mapUserReviewsToUserReviewResponses(List<UserReview> userReviews);
 
     @Named("mapIntToUserRating")
     default UserRating mapIntToUserRating(int value) {
