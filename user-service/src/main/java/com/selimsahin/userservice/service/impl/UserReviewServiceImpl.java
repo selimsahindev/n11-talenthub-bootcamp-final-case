@@ -31,8 +31,8 @@ public class UserReviewServiceImpl implements UserReviewService {
 
     private final RestaurantServiceClient restaurantServiceClient;
     private final UserReviewRepository userReviewRepository;
-    private final KafkaProducer userReviewProducerService;
     private final UserReviewMapper userReviewMapper;
+    private final KafkaProducer kafkaProducer;
     private final UserService userService;
     private final AppLogger appLogger;
 
@@ -44,7 +44,7 @@ public class UserReviewServiceImpl implements UserReviewService {
 
         UserReview userReview = userReviewMapper.mapUserReviewCreateRequestToUserReview(request);
         userReview = userReviewRepository.save(userReview);
-        UserReviewResponse userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReview);
+        UserReviewResponse userReviewDetailDTO = userReviewMapper.mapUserReviewToUserReviewResponse(userReview);
 
         // Update restaurant average rating and publish event to Kafka.
         updateRestaurantAverageRating(userReview.getRestaurantId());
@@ -58,9 +58,8 @@ public class UserReviewServiceImpl implements UserReviewService {
     @Override
     public List<UserReviewResponse> getAllUserReviews() {
 
-        return userReviewRepository.findAll().stream()
-                .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
-                .toList();
+        List<UserReview> userReviews = userReviewRepository.findAll();
+        return userReviewMapper.mapUserReviewsToUserReviewResponses(userReviews);
     }
 
     @Override
@@ -72,7 +71,7 @@ public class UserReviewServiceImpl implements UserReviewService {
             throw new UserReviewNotFoundException("User review not found with id: " + id);
         }
 
-        return userReviewMapper.mapUserReviewToUserReviewDetailDTO(userReviewOptional.get());
+        return userReviewMapper.mapUserReviewToUserReviewResponse(userReviewOptional.get());
     }
 
     @Override
@@ -83,9 +82,7 @@ public class UserReviewServiceImpl implements UserReviewService {
 
         List<UserReview> userReviews = userReviewRepository.findAllByUserId(userId);
 
-        return userReviews.stream()
-                .map(userReviewMapper::mapUserReviewToUserReviewDetailDTO)
-                .toList();
+        return userReviewMapper.mapUserReviewsToUserReviewResponses(userReviews);
     }
 
     private void updateRestaurantAverageRating(Long restaurantId) {
@@ -93,7 +90,7 @@ public class UserReviewServiceImpl implements UserReviewService {
         Double averageRating = userReviewRepository.findAverageRatingByRestaurantId(restaurantId);
 
         // Publish restaurant average rating updated event to Kafka.
-        userReviewProducerService.publishAverageRatingCalculatedEvent(restaurantId, averageRating);
+        kafkaProducer.publishAverageRatingCalculatedEvent(restaurantId, averageRating);
 
         appLogger.logInfo("Restaurant average rating updated","Restaurant average rating updated with id: " + restaurantId + " and average rating: " + averageRating);
     }
