@@ -1,6 +1,6 @@
 package com.selimsahin.restaurantservice.kafka.producer;
 
-import com.selimsahin.restaurantservice.dto.RestaurantResponse;
+import com.selimsahin.restaurantservice.dto.response.RestaurantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
