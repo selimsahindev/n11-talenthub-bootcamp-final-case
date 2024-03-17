@@ -1,0 +1,12 @@
+
+Note:
+
+init.sql  is for creating DBs while running docker-compose up.
+
+this is registered in the docker-compose.yml file as a volume,
+so that the database is created when the container is started.
+
+... docker-compose.yml ...
+
+volumes:
+  - ./init-scripts:/docker-entrypoint-initdb.d
