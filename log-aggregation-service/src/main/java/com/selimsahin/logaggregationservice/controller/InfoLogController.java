@@ -25,11 +25,11 @@ public class InfoLogController {
 
     private final InfoLogService infoLogService;
 
-    @GetMapping
     @Operation(summary = "Get All Info Logs", description = "Retrieves a list of all info logs")
     @ApiResponse(responseCode = "200", description = "List of info logs retrieved successfully",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = InfoLogDTO.class))
     )
+    @GetMapping
     public ResponseEntity<List<InfoLogDTO>> getInfoLogs() {
         return ResponseEntity.ok(infoLogService.getAllInfoLogs());
     }

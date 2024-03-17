@@ -29,18 +29,17 @@ public class RestaurantSearchController {
 
     private final RestaurantService restaurantService;
 
-    @GetMapping
     @Operation(summary = "Get All Restaurants", description = "Retrieves a list of all restaurants")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of restaurants retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RestaurantSearchResponse.class)))
     })
+    @GetMapping
     public ResponseEntity<RestResponse<List<RestaurantSearchResponse>>> findAll() {
 
         List<RestaurantSearchResponse> restaurants = restaurantService.getAllRestaurants();
         return ResponseEntity.ok(RestResponse.of(restaurants));
     }
 
-    @GetMapping("/by-location-near")
     @Operation(summary = "Search Restaurants by Location (Near)", description = "Searches for restaurants near a given location")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of restaurants near the specified location retrieved successfully",
@@ -48,6 +47,7 @@ public class RestaurantSearchController {
                     examples = @ExampleObject(value = "{ \"location\": \"39.90180157645193,32.85794341887077\" }",
                             description = "Search restaurants near the specified location. Example location is somewhere near Kuğulu Park, Ankara.")))
     })
+    @GetMapping("/by-location-near")
     public ResponseEntity<RestResponse<List<RestaurantSearchResponse>>> searchByLocationNear(
             @ModelAttribute RestaurantSearchRequest request) {
 

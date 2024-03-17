@@ -25,13 +25,13 @@ public class ErrorLogController {
 
     private final ErrorLogService errorLogService;
 
-    @GetMapping
     @Operation(summary = "Get All Error Logs", description = "Retrieves a list of all error logs")
     @ApiResponse(
             responseCode = "200",
             description = "List of error logs retrieved successfully",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorLogDTO.class))
     )
+    @GetMapping
     public ResponseEntity<List<ErrorLogDTO>> getErrorLogs() {
         return ResponseEntity.ok(errorLogService.getAllErrorLogs());
     }

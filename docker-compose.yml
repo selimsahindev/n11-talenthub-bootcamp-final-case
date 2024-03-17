@@ -1,6 +1,6 @@
 
-## I remoced the images because there was a problem with the networking
-## Build is necessary for the networking to work properly.
+## I removed image and pull policy because there was a problem with the networking
+## Rebuild is necessary for the networking to work properly.
 
 version: '3.8'
 
@@ -11,6 +11,7 @@ networks:
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.4
+    restart: always
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -19,6 +20,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.4.4
+    restart: always
     depends_on:
       - zookeeper
     ports:
@@ -34,6 +36,7 @@ services:
   solr:
     image: solr:9.5.0
     container_name: solr
+    restart: always
     ports:
       - "8983:8983"
     volumes:
@@ -45,6 +48,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
+    restart: always
     ports:
       - "27017:27017"
     environment:
@@ -82,7 +86,6 @@ services:
     network_mode: "host"
 
   eureka-server:
-#    image: selimsahindev/eureka-server:latest
     build:
       context: ./eureka-server
       dockerfile: Dockerfile
@@ -91,7 +94,6 @@ services:
     network_mode: "host"
 
   api-gateway:
-#    image: selimsahindev/api-gateway-service:latest
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
@@ -102,7 +104,6 @@ services:
     network_mode: "host"
 
   user-service:
-#    image: selimsahindev/user-service:latest
     build:
       context: ./user-service
       dockerfile: Dockerfile
@@ -116,7 +117,6 @@ services:
     network_mode: "host"
 
   restaurant-service:
-#    image: selimsahindev/restaurant-service:latest
     build:
       context: ./restaurant-service
       dockerfile: Dockerfile
@@ -130,7 +130,6 @@ services:
     network_mode: "host"
 
   recommendation-service:
-#    image: selimsahindev/recommendation-service:latest
     build:
       context: ./recommendation-service
       dockerfile: Dockerfile
@@ -139,6 +138,19 @@ services:
     depends_on:
       - kafka
       - solr
+      - api-gateway
+      - eureka-server
+    network_mode: "host"
+
+  logger-service:
+    build:
+      context: ./log-aggregation-service
+      dockerfile: Dockerfile
+    container_name: logger-service
+    restart: always
+    depends_on:
+      - kafka
+      - mongodb
       - api-gateway
       - eureka-server
     network_mode: "host"
