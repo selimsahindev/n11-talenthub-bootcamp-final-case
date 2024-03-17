@@ -1,10 +1,12 @@
 
-# n11 TalentHub Backend Bootcamp - Final Projesi
-
-For English, please see [English](README.en.md).
+# Final Projesi - n11 TalentHub Bootcamp 👑
 
 Bu proje, n11 TalentHub Backend Bootcamp'inin final projesidir. Apache Solr üzerine inşa edilmiş bir restoran öneri sistemi içerir.
 Mikroservis mimarisi uygulanarak geliştirilmiştir.
+
+LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
+LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
+Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
 
 ## Kısaca Bazı Özellikler
 
