@@ -27,6 +27,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+
 public class UserReviewServiceImpl implements UserReviewService {
 
     private final RestaurantServiceClient restaurantServiceClient;

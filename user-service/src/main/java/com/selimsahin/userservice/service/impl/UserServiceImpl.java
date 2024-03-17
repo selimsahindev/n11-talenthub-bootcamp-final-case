@@ -3,6 +3,7 @@ package com.selimsahin.userservice.service.impl;
 import com.selimsahin.userservice.dto.request.UserCreateRequest;
 import com.selimsahin.userservice.dto.response.UserResponse;
 import com.selimsahin.userservice.entity.User;
+import com.selimsahin.userservice.exception.UserEmailAlreadyExistException;
 import com.selimsahin.userservice.exception.UserNotFoundException;
 import com.selimsahin.userservice.mapper.UserMapper;
 import com.selimsahin.userservice.repository.UserRepository;
@@ -29,6 +30,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserCreateRequest request) {
+
+        // Check if user already exists
+        Optional<User> userOptional = userRepository.findByEmail(request.email());
+
+        if (userOptional.isPresent()) {
+            throw new UserEmailAlreadyExistException("User already exists with email: " + request.email());
+        }
 
         User user = userMapper.mapUserCreateRequestToUser(request);
         user = userRepository.save(user);
