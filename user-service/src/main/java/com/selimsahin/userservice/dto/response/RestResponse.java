@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RestResponse<T> {
 
+    public static final String SUCCESS_MESSAGE = "success";
+    public static final String ERROR_MESSAGE = "error";
+
     private T data;
     private String message;
     private LocalDateTime responseDate;
@@ -24,15 +27,19 @@ public class RestResponse<T> {
         this.responseDate = LocalDateTime.now();
     }
 
+    public boolean isSuccess(){
+        return message.equals(SUCCESS_MESSAGE);
+    }
+
     public static <T> RestResponse<T> empty(){
-        return new RestResponse<>("success", null);
+        return new RestResponse<>(SUCCESS_MESSAGE, null);
     }
 
     public static <T> RestResponse<T> of(T t){
-        return new RestResponse<>("success", t);
+        return new RestResponse<>(SUCCESS_MESSAGE, t);
     }
 
     public static <T> RestResponse<T> error(T t){
-        return new RestResponse<>("error", t);
+        return new RestResponse<>(ERROR_MESSAGE, t);
     }
 }

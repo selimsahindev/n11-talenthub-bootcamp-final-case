@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author selimsahindev
  */
-class UserServiceTest {
+class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -48,7 +48,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateUser_successfullyCreatesUserWithValidRequest() {
+    void testCreateUser_shouldCreateUserWithValidRequest() {
 
         // Given
         UserCreateRequest mockRequest = createMockUserCreateRequest();
@@ -75,7 +75,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateUser_throwsExceptionOnMappingError() {
+    void testCreateUser_shouldThrowExceptionOnMappingError() {
 
         // Given
         UserCreateRequest mockRequest = createMockUserCreateRequest();
@@ -92,7 +92,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateUser_throwsExceptionOnRepositoryError() {
+    void testCreateUser_shouldThrowExceptionOnRepositoryError() {
 
         // Given
         UserCreateRequest mockRequest = createMockUserCreateRequest();
@@ -107,7 +107,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetAllUsers_returnsListOfAllUsers() {
+    void testGetAllUsers_shouldReturnListOfAllUsers() {
 
         // Given
         List<User> mockUsers = createMockUsers();
@@ -125,7 +125,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetAllUsers_returnsEmptyListForNoUsers() {
+    void testGetAllUsers_shouldReturnEmptyListForNoUsers() {
 
         // Mock the calls
         when(userRepository.findAll()).thenReturn(Collections.emptyList());
@@ -138,7 +138,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetUserById_returnsUserForExistingId() {
+    void testGetUserById_shouldReturnUserForExistingId() {
 
         // Given
         User mockUser = createMockUsers().getFirst();
@@ -156,7 +156,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetUserById_throwsUserNotFoundExceptionForNonExistentId() {
+    void testGetUserById_shouldThrowUserNotFoundExceptionForNonExistentId() {
 
         // Mock the calls
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -166,7 +166,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testUpdateUser_successfullyUpdatesUserWithValidRequestAndId() {
+    void testUpdateUser_shouldUpdatesUserWithValidRequestAndId() {
 
         // Given
         UserResponse mockUpdatedUserResponse = createMockUserResponses().getFirst();
@@ -190,7 +190,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testUpdateUser_throwsNotFoundExceptionForNonExistentId() {
+    void testUpdateUser_shouldThrowNotFoundExceptionForNonExistentId() {
 
         // Given
         UserCreateRequest mockRequest = createMockUserCreateRequest();
@@ -204,7 +204,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testDeleteUser_successfullyDeletesExistingUser() {
+    void testDeleteUser_shouldDeletesExistingUser() {
 
         // Mock the call (optional)
         doNothing().when(userRepository).deleteById(anyLong());

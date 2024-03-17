@@ -10,19 +10,9 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins:
-              - "http://localhost"
-              - "http://localhost:3000"
-              - "https://7d35-178-233-42-92.ngrok-free.app"
-              - "http://127.0.0.1:4040"
-            allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - PATCH
-              - OPTIONS
+    globalcors:
+      corsConfigurations:
+        '[/**]':
+          allowedOrigins: "*"
+          allowedHeaders: "*"
+          allowedMethods: "*"

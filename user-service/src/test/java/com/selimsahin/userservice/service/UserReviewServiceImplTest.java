@@ -28,13 +28,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
  * @author selimsahindev
  */
-class UserReviewServiceTest {
+class UserReviewServiceImplTest {
 
     @InjectMocks
     private UserReviewServiceImpl userReviewService;
@@ -63,7 +62,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetAllUserReviews_returnsListOfAllUserReviews() {
+    void testGetAllUserReviews_shouldReturnListOfAllUserReviews() {
 
         // Given
         List<UserReview> mockReviews = createMockUserReviews();
@@ -81,7 +80,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetAllUserReviews_returnsEmptyListForNoUserReviews() {
+    void testGetAllUserReviews_shouldReturnEmptyListForNoUserReviews() {
 
         // Mock the calls
         when(userReviewRepository.findAll()).thenReturn(Collections.emptyList());
@@ -94,7 +93,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetUserReviewById_returnsUserForExistingId() {
+    void testGetUserReviewById_shouldReturnUserForExistingId() {
 
         // Given
         UserReview mockReview = createMockUserReviews().getFirst();
@@ -112,7 +111,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetUserReviewById_throwsUserReviewNotFoundExceptionForNonExistentId() {
+    void testGetUserReviewById_shouldThrowUserReviewNotFoundExceptionForNonExistentId() {
 
         // Mock the calls
         when(userReviewRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -122,7 +121,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetUserReviewsByUserId_returnsListOfUserReviewsForExistingUserId() {
+    void testGetUserReviewsByUserId_shouldReturnListOfUserReviewsForExistingUserId() {
 
             // Given
             List<UserReview> mockReviews = createMockUserReviews();
@@ -142,7 +141,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetUserReviewsByUserId_throwsUserNotFoundExceptionForNonExistentUserId() {
+    void testGetUserReviewsByUserId_shouldThrowUserNotFoundExceptionForNonExistentUserId() {
 
         // Mock the calls
         when(userService.getUserById(anyLong())).thenThrow(new UserNotFoundException("User not found with id: " + 1L));
@@ -152,7 +151,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testGetUserReviewsByUserId_returnsEmptyListForNoUserReviews() {
+    void testGetUserReviewsByUserId_shouldReturnEmptyListForNoUserReviews() {
 
         // Given
         List<UserResponse> mockUserResponses = createMockUserResponses();
@@ -169,7 +168,7 @@ class UserReviewServiceTest {
     }
 
     @Test
-    void testCreateUserReview_successfullyCreatesReviewForValidRequest() {
+    void testCreateUserReview_shouldCreateReviewForValidRequest() {
 
         // Given
         UserReviewCreateRequest mockRequest = createMockUserReviewCreateRequest();

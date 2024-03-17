@@ -45,6 +45,13 @@
 			<version>4.1.0</version>
 		</dependency>
 
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
 		<!-- Spring Boot Dev Tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

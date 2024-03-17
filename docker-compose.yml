@@ -1,3 +1,7 @@
+
+## I removed image and pull policy because there was a problem with the networking
+## Rebuild is necessary for the networking to work properly.
+
 version: '3.8'
 
 networks:
@@ -7,6 +11,7 @@ networks:
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.4
+    restart: always
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -15,6 +20,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.4.4
+    restart: always
     depends_on:
       - zookeeper
     ports:
@@ -30,10 +36,11 @@ services:
   solr:
     image: solr:9.5.0
     container_name: solr
+    restart: always
     ports:
-      - 8983:8983
+      - "8983:8983"
     volumes:
-      - ./data/solr:/var/solr
+      - ./recommendation-service/src/main/resources/solr:/var/solr
     command:
       - solr-precreate
       - restaurants
@@ -41,6 +48,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
+    restart: always
     ports:
       - "27017:27017"
     environment:
@@ -49,7 +57,7 @@ services:
     networks:
       - mongodb-network
     volumes:
-      - ./data/mongodb:/data/db
+      - ./mongodb-data:/data/db
 
   mongo-express:
     image: mongo-express
@@ -65,3 +73,84 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongodb
     networks:
       - mongodb-network
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    network_mode: "host"
+
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    restart: always
+    network_mode: "host"
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    depends_on:
+      - eureka-server
+    restart: always
+    network_mode: "host"
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    restart: always
+    depends_on:
+      - kafka
+      - postgres
+      - api-gateway
+      - eureka-server
+    network_mode: "host"
+
+  restaurant-service:
+    build:
+      context: ./restaurant-service
+      dockerfile: Dockerfile
+    container_name: restaurant-service
+    restart: always
+    depends_on:
+      - kafka
+      - postgres
+      - api-gateway
+      - eureka-server
+    network_mode: "host"
+
+  recommendation-service:
+    build:
+      context: ./recommendation-service
+      dockerfile: Dockerfile
+    container_name: recommendation-service
+    restart: always
+    depends_on:
+      - kafka
+      - solr
+      - api-gateway
+      - eureka-server
+    network_mode: "host"
+
+  logger-service:
+    build:
+      context: ./log-aggregation-service
+      dockerfile: Dockerfile
+    container_name: logger-service
+    restart: always
+    depends_on:
+      - kafka
+      - mongodb
+      - api-gateway
+      - eureka-server
+    network_mode: "host"

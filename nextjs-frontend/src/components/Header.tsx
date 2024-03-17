@@ -13,8 +13,8 @@ const Header = () => {
   return (
     <div className="flex h-16 w-full items-center justify-between bg-purple-500 px-5">
       <div className="flex flex-row items-center gap-8">
-        <h2 className="text-xl font-bold text-yellow-200">
-          Recommandation API
+        <h2 className="cursor-default text-2xl font-bold text-yellow-200">
+          Restaurants
         </h2>
         {pathname !== "/register" && (
           <div className="flex flex-row items-center gap-2">
@@ -30,7 +30,7 @@ const Header = () => {
               onClick={() => router.push("/discover")}
               disabled={pathname === "/discover"}
             >
-              Discover
+              Discover All
             </Button>
           </div>
         )}
@@ -43,6 +43,7 @@ const Header = () => {
               localStorage.removeItem("name");
               router.push("/register");
             }}
+            className="cursor-pointer text-lg text-yellow-200"
           >
             Logout
           </Button>

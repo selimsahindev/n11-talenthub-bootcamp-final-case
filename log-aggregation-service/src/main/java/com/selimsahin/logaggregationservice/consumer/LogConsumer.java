@@ -1,5 +1,6 @@
 package com.selimsahin.logaggregationservice.consumer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.selimsahin.logaggregationservice.dto.ErrorLogDTO;
 import com.selimsahin.logaggregationservice.dto.InfoLogDTO;
 import com.selimsahin.logaggregationservice.service.ErrorLogService;
@@ -20,38 +21,27 @@ public class LogConsumer {
 
     private final ErrorLogService errorLogService;
     private final InfoLogService infoLogService;
+    private final ObjectMapper objectMapper;
 
     @KafkaListener(topics = "${kafka.topic.error-log}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consumeErrorLog(ConsumerRecord<String, String> message){
+    public void consumeErrorLog(ConsumerRecord<String, String> payload){
 
         try {
-            ErrorLogDTO errorLog = ErrorLogDTO.builder()
-                    .service(message.key())
-                    .timestamp(LocalDateTime.now())
-                    .status(200)
-                    .error(message.value())
-                    .message(message.value())
-                    .stackTrace(message.value())
-                    .build();
+            ErrorLogDTO errorLogDto = objectMapper.readValue(payload.value(), ErrorLogDTO.class);
+            errorLogService.createErrorLog(errorLogDto);
 
-            errorLogService.createErrorLog(errorLog);
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
     @KafkaListener(topics = "${kafka.topic.info-log}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consumeInfoLog(ConsumerRecord<String, String> message){
+    public void consumeInfoLog(ConsumerRecord<String, String> payload){
 
         try {
-            InfoLogDTO infoLog = InfoLogDTO.builder()
-                    .service(message.key())
-                    .timestamp(LocalDateTime.now())
-                    .message(message.value())
-                    .description(message.value())
-                    .build();
-
-            infoLogService.createInfoLog(infoLog);
+            InfoLogDTO infoLogDto = objectMapper.readValue(payload.value(), InfoLogDTO.class);
+            infoLogService.createInfoLog(infoLogDto);
+            
         } catch (Exception e){
             e.printStackTrace();
         }
