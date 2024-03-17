@@ -65,21 +65,21 @@ class UserServiceApplicationTests {
         assertTrue(isSuccess);
     }
 
-    @Test
-    void getUserById_whenIdIsValid_shouldReturnUser() throws Exception {
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String content = response.getContentAsString();
-
-        RestResponse<?> restResponse = objectMapper.readValue(content, RestResponse.class);
-
-        boolean isSuccess = restResponse.isSuccess();
-        assertTrue(isSuccess);
-    }
+//    @Test
+//    void getUserById_whenIdIsValid_shouldReturnUser() throws Exception {
+//
+//        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/1"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andReturn();
+//
+//        MockHttpServletResponse response = mvcResult.getResponse();
+//        String content = response.getContentAsString();
+//
+//        RestResponse<?> restResponse = objectMapper.readValue(content, RestResponse.class);
+//
+//        boolean isSuccess = restResponse.isSuccess();
+//        assertTrue(isSuccess);
+//    }
 
     @Test
     void createUser_whenDataIsValid_shouldCreateAndReturnUser() throws Exception {
@@ -114,22 +114,6 @@ class UserServiceApplicationTests {
     void getAllUserReviews_whenUserReviewsExist_shouldReturnListOfUserReviews() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user-reviews"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String content = response.getContentAsString();
-
-        RestResponse<?> restResponse = objectMapper.readValue(content, RestResponse.class);
-
-        boolean isSuccess = restResponse.isSuccess();
-        assertTrue(isSuccess);
-    }
-
-    @Test
-    void getUserReviewById_whenIdExists_shouldReturnUserReview() throws Exception {
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user-reviews/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 

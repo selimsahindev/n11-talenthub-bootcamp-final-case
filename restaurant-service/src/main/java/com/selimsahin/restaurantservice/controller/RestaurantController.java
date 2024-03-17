@@ -27,12 +27,12 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    @GetMapping
     @Operation(summary = "Get All Restaurants", description = "Retrieves a paginated list of all restaurants")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of restaurants retrieved successfully",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = RestaurantResponse.class)))
     })
+    @GetMapping
     public ResponseEntity<RestResponse<List<RestaurantResponse>>> getAllRestaurants(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
@@ -42,24 +42,24 @@ public class RestaurantController {
         return ResponseEntity.ok(RestResponse.of(restaurants));
     }
 
-    @GetMapping("/{id}")
     @Operation(summary = "Get Restaurant by Id", description = "Retrieves a restaurant by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Restaurant retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RestaurantResponse.class))),
             @ApiResponse(responseCode = "404", description = "Restaurant not found")
     })
+    @GetMapping("/{id}")
     public ResponseEntity<RestResponse<RestaurantResponse>> getRestaurantById(@PathVariable Long id) {
 
         RestaurantResponse restaurant = restaurantService.getRestaurantById(id);
         return ResponseEntity.ok(RestResponse.of(restaurant));
     }
 
-    @PostMapping
     @Operation(summary = "Create Restaurant", description = "Creates a new restaurant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Restaurant created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RestaurantResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request body")
     })
+    @PostMapping
     public ResponseEntity<RestResponse<RestaurantResponse>> createRestaurant(
             @RequestBody @Valid RestaurantCreateRequest request) {
 
@@ -67,12 +67,12 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(RestResponse.of(createdRestaurant));
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "Delete Restaurant", description = "Deletes a restaurant by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Restaurant deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Restaurant not found")
     })
+    @DeleteMapping("/{id}")
     public ResponseEntity<RestResponse<Void>> deleteRestaurant(@PathVariable Long id) {
 
         restaurantService.deleteRestaurant(id);
