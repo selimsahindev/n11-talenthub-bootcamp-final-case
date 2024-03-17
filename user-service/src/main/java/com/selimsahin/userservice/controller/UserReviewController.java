@@ -5,6 +5,10 @@ import com.selimsahin.userservice.dto.response.UserReviewResponse;
 import com.selimsahin.userservice.dto.request.UserReviewCreateRequest;
 import com.selimsahin.userservice.service.UserReviewService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +38,12 @@ public class UserReviewController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get user review by id", description = "Returns a user review by id")
+    @Operation(summary = "Get all user reviews", description = "Returns a list of all user reviews")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User review retrieved successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserReviewResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User review not found")
+    })
     public ResponseEntity<RestResponse<UserReviewResponse>> getUserReviewById(@PathVariable Long id) {
 
         UserReviewResponse userReview = userReviewService.getUserReviewById(id);
@@ -43,6 +52,10 @@ public class UserReviewController {
 
     @GetMapping("/by-user")
     @Operation(summary = "Get all user reviews by user id", description = "Returns a list of all user reviews by user id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of user reviews by user id retrieved successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserReviewResponse.class)))
+    })
     public ResponseEntity<RestResponse<List<UserReviewResponse>>> getAllUserReviewsByUserId(@RequestParam Long userId) {
 
         List<UserReviewResponse> userReviews = userReviewService.getAllUserReviewsByUserId(userId);
@@ -51,6 +64,11 @@ public class UserReviewController {
 
     @PostMapping
     @Operation(summary = "Create user review", description = "Creates a new user review")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User review created successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserReviewResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body")
+    })
     public ResponseEntity<RestResponse<UserReviewResponse>> createUserReview(
             @RequestBody @Valid UserReviewCreateRequest request) {
 

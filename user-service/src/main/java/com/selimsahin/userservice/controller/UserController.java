@@ -4,6 +4,11 @@ import com.selimsahin.userservice.dto.response.RestResponse;
 import com.selimsahin.userservice.dto.response.UserResponse;
 import com.selimsahin.userservice.dto.request.UserCreateRequest;
 import com.selimsahin.userservice.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @Operation(summary = "Get All Users", description = "Retrieves a list of all users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of users retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))
+    })
     public ResponseEntity<RestResponse<List<UserResponse>>> getAllUsers() {
 
         List<UserResponse> users = userService.getAllUsers();
@@ -32,6 +41,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get User by Id", description = "Retrieves a user by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     public ResponseEntity<RestResponse<UserResponse>> getUserById(@PathVariable Long id) {
 
         UserResponse user = userService.getUserById(id);
@@ -39,6 +53,11 @@ public class UserController {
     }
 
     @PostMapping
+    @Operation(summary = "Create User", description = "Creates a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body")
+    })
     public ResponseEntity<RestResponse<UserResponse>> createUser(@RequestBody @Valid UserCreateRequest request) {
 
         UserResponse createdUser = userService.createUser(request);
@@ -46,6 +65,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update User", description = "Updates an existing user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     public ResponseEntity<RestResponse<UserResponse>> updateUser(@PathVariable Long id, @RequestBody @Valid UserCreateRequest request) {
 
         UserResponse updatedUser = userService.updateUser(id, request);
@@ -53,6 +78,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete User", description = "Deletes a user by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     public ResponseEntity<RestResponse<Void>> deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
