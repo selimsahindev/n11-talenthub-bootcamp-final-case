@@ -4,6 +4,7 @@ import com.selimsahin.userservice.dto.response.RestResponse;
 import com.selimsahin.userservice.dto.response.UserResponse;
 import com.selimsahin.userservice.dto.request.UserCreateRequest;
 import com.selimsahin.userservice.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Tag(name = "User Controller", description = "Provides operations for managing users")
 public class UserController {
 
     private final UserService userService;
