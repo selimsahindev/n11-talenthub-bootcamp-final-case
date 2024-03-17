@@ -1,10 +1,7 @@
 package com.selimsahin.userservice.exception.handler;
 
 import com.selimsahin.userservice.dto.response.RestResponse;
-import com.selimsahin.userservice.exception.LogProducerException;
-import com.selimsahin.userservice.exception.RestaurantNotFoundException;
-import com.selimsahin.userservice.exception.UserNotFoundException;
-import com.selimsahin.userservice.exception.UserReviewNotFoundException;
+import com.selimsahin.userservice.exception.*;
 import com.selimsahin.userservice.exception.errormessages.GeneralErrorMessage;
 import com.selimsahin.userservice.util.AppLogger;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +36,16 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
 
         RestResponse<GeneralErrorMessage> restResponse = getGeneralErrorMessageRestResponse(exception, request);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restResponse);
+    }
+
+    @ExceptionHandler(UserEmailAlreadyExistException.class)
+    public ResponseEntity<Object> handleUserEmailAlreadyExistException(UserEmailAlreadyExistException exception,
+                                                                       WebRequest request) {
+
+        appLogger.logError(exception);
+
+        RestResponse<GeneralErrorMessage> restResponse = getGeneralErrorMessageRestResponse(exception, request);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(restResponse);
     }
 
     @ExceptionHandler(LogProducerException.class)
