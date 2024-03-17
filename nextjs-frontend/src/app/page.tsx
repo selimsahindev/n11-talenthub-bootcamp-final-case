@@ -4,8 +4,19 @@ import { getRestaurants } from "@/api/restaurant";
 import RestaurantListItem from "@/components/RestaurantListItem";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export default function HomePage() {
+  const router = useRouter();
+  const name = localStorage.getItem("name");
+
+  React.useEffect(() => {
+    if (!name) {
+      router.push("/register");
+    }
+  }, []);
+
   const {
     data: restaurants,
     isLoading,
