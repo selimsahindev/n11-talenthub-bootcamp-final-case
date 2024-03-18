@@ -26,8 +26,6 @@ Projeyi `Docker` kullanarak nasıl çalıştırabileceğinizi öğrenmek için [
 ## Postman ile deneyin
 API adreslerini Postman ile deneyebilirsiniz: [**Postman API** 🚀](https://www.postman.com/selimsahindev/workspace/selim-ahin-n11-talenthub-bootcamp)
 
-- Ekranın sağ üstünden n11 environment'ı seçmeniz gerekmekte.
-
 ## Mikroservisler
 
 Aşağıda projeye ait mikroservislerin listesi bulunmaktadır.<br>
