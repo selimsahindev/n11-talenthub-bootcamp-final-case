@@ -12,13 +12,21 @@ Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
 
 - Unit ve Integration testleri yazıldı.
 - Her temel servisin kendi veritabanı bulunuyor.
-- Kafka üzerinden asenkron mesajlaşma sağlandı.
+- Kafka ile asenkron mesajlaşma sağlandı.
 - Loglar için MongoDB kullanılıyor.
 - Eureka service discovery yapısı hazırlandı.
 - Next.js ile oluşturulmuş basit bir önyüze sahip.
 - docker-compose.yml dosyası hazırlandı.
+- Swagger API dokümantasyonu eklendi. 
+- Postman üzerinden denenebilir.
 
 Projeyi `Docker` kullanarak nasıl çalıştırabileceğinizi öğrenmek için [Docker](#docker) bölümünü inceleyiniz.
+
+
+## Postman ile deneyin
+API adreslerini Postman ile deneyebilirsiniz: [**Postman API** 🚀](https://www.postman.com/selimsahindev/workspace/selim-ahin-n11-talenthub-bootcamp)
+
+- Ekranın sağ üstünden n11 environment'ı seçmeniz gerekmekte.
 
 ## Mikroservisler
 
@@ -33,7 +41,7 @@ Aşağıda projeye ait mikroservislerin listesi bulunmaktadır.<br>
 
 ## Proje Şeması
 
-![Proje Diyagramı](TalentHubProjectDiagram.png)
+![Proje Diyagramı](images/talenthub-project-diagram.png)
 
 
 # Docker
@@ -164,7 +172,22 @@ MongoDB veritabanınızı yönetmek için kullanabileceğiniz bir web tabanlı a
 2. Varsayılan kullanıcı adı ve parola `admin` : `pass` şeklindedir.
 3. MongoDB veritabanınızı seçin ve yönetmeye başlayın.
 
+## Projenin Önyüzü
 
+### "Near to you" Sayfası
+Bu sayfada kullanıcılar, yakınlarında bulunan ve ortalama puanı en yüksek olan üç restoranı görebilirler.
+
+![Restaurant recommendations](images/near-to-you.png)
+
+### "Discover all" Sayfası
+Bu sayfasda, kullanıcıların var olan tüm restoranları keşfedebilecekleri bir liste bulunur.
+
+![Discover all restaurants](images/discover-all.png)
+
+### "Registration" Sayfası
+İçimizi ısıtan bir register sayfası...
+
+![Registration page](images/registration.png)
 
 <br>
 
@@ -173,3 +196,4 @@ MongoDB veritabanınızı yönetmek için kullanabileceğiniz bir web tabanlı a
 LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
 LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
 GitHub: [selimsahindev](https://github.com/selimsahindev)
+Mail: [Gmail](mailto:selimsahin.sns@gmail.com)
