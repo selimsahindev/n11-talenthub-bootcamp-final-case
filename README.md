@@ -6,6 +6,7 @@ Mikroservis mimarisi uygulanarak geliştirilmiştir.
 
 LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
 LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
+GitHub: [selimsahindev](https://github.com/selimsahindev)<br>
 Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
 
 ## Kısaca Bazı Özellikler
@@ -193,5 +194,5 @@ Bu sayfasda, kullanıcıların var olan tüm restoranları keşfedebilecekleri b
 
 LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
 LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
-GitHub: [selimsahindev](https://github.com/selimsahindev)
-Mail: [Gmail](mailto:selimsahin.sns@gmail.com)
+GitHub: [selimsahindev](https://github.com/selimsahindev)<br>
+Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
