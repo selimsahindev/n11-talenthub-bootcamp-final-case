@@ -1,198 +1,205 @@
+# Final Project — n11 TalentHub Bootcamp 👑
 
-# Final Projesi - n11 TalentHub Bootcamp 👑
+This is the final project of the n11 TalentHub Backend Bootcamp. It features a restaurant recommendation system built on top of Apache Solr, developed using a microservices architecture.
 
-Bu proje, n11 TalentHub Backend Bootcamp'inin final projesidir. Apache Solr üzerine inşa edilmiş bir restoran öneri sistemi içerir.
-Mikroservis mimarisi uygulanarak geliştirilmiştir.
+LinkedIn: [Selim Sahin](https://www.linkedin.com/in/selim-sahin/)  
+GitHub: [selimsahindev](https://github.com/selimsahindev/)
 
-LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
-LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
-GitHub: [selimsahindev](https://github.com/selimsahindev)<br>
-Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
+---
 
-## Kısaca Bazı Özellikler
+## Highlights
 
-- Unit ve Integration testleri yazıldı.
-- Her temel servisin kendi veritabanı bulunuyor.
-- Kafka ile asenkron mesajlaşma sağlandı.
-- Loglar için MongoDB kullanılıyor.
-- Eureka service discovery yapısı hazırlandı.
-- Next.js ile oluşturulmuş basit bir önyüze sahip.
-- docker-compose.yml dosyası hazırlandı.
-- Swagger API dokümantasyonu eklendi. 
-- Postman üzerinden denenebilir.
+- Unit and integration tests are written.
+- Each core service has its own dedicated database.
+- Asynchronous messaging is handled via Kafka.
+- MongoDB is used for log storage.
+- Eureka service discovery is configured.
+- A simple frontend is built with Next.js.
+- A `docker-compose.yml` file is provided.
+- Swagger API documentation is included.
+- The API can be tested via Postman.
 
-Projeyi `Docker` kullanarak nasıl çalıştırabileceğinizi öğrenmek için [Docker](#docker) bölümünü inceleyiniz.
+To learn how to run the project with Docker, see the [Docker](#docker) section.
 
+---
 
-## Postman ile deneyin
-API adreslerini Postman ile deneyebilirsiniz: [**Postman API** 🚀](https://www.postman.com/selimsahindev/workspace/selim-ahin-n11-talenthub-bootcamp)
+## Try It with Postman
 
-## Mikroservisler
+You can test all API endpoints using Postman: [**Postman API** 🚀](https://www.postman.com/selimsahindev/workspace/selim-ahin-n11-talenthub-bootcamp)
 
-Aşağıda projeye ait mikroservislerin listesi bulunmaktadır.<br>
-<br>📦 User Service
-<br>📦 Restaurant Service
-<br>📦 Recommendation Service
-<br>🐝 Log Aggregation Service
-<br>⛩️ API Gateway
-<br>🌐 Eureka Service Discovery
+---
 
+## Microservices
 
-## Proje Şeması
+The following microservices are part of the project:
 
-![Proje Diyagramı](images/talenthub-project-diagram.png)
+- 📦 User Service
+- 📦 Restaurant Service
+- 📦 Recommendation Service
+- 🐝 Log Aggregation Service
+- ⛩️ API Gateway
+- 🌐 Eureka Service Discovery
 
+---
 
-# Docker
+## Project Architecture Diagram
 
-Projeyi çalıştırmak için Docker kullanabilirsiniz. [Docker](https://www.docker.com/products/docker-desktop) sayfasından docker'ı indirebilirsiniz.
+![Project Diagram](images/talenthub-project-diagram.png)
 
-## Projeyi ayağa kaldıralım
+---
 
-1. Terminalinizi açın ve projenin ana dizinine gidin.
-2. `docker-compose up -d` komutunu çalıştırın.
-3. Tüm servislerin başlatılmasını bekleyin. (Epey sürebilir, sabırlı olun...)
-4. Tüm servislerin başlatıldığını gördüğünüzde, API kullanılabilir durumda demektir (umarım)
-5. Next.js projesini çalıştırmak için bir sonraki adımda yer alan [Next.js](#next.js) bölümüne bakınız.
+## Docker
 
-Kapatmak için terminalinizden projenin ana dizinine gidin ve `docker-compose down` komutunu çalıştırın.
+You can run the project using Docker. Download Docker Desktop from the [official Docker website](https://www.docker.com/products/docker-desktop).
 
+### Starting the Project
 
-Projeyi çalıştırmak için Docker'ın yeterli olacağını düşünüyorum. Ancak, önyüz projesini çalıştırmak için Node.js ve npm gerekecektir.
+1. Open a terminal and navigate to the root directory of the project.
+2. Run `docker-compose up -d`.
+3. Wait for all services to start. (This may take a while — be patient.)
+4. Once all services are up, the API should be ready to use.
+5. To run the frontend, refer to the [Next.js](#nextjs) section below.
 
-# Next.js
+To stop the project, navigate to the root directory and run `docker-compose down`.
 
-Next.js projesi, basit bir önyüz sunar. Bu önyüz, kullanıcıların kendilerine yakın restoran önerilerini ve diğer restoranları görmelerini sağlar.
+> **Note:** Docker is sufficient to run the backend. However, running the frontend requires Node.js and npm.
 
-## Önyüzü çalıştırma adımları
+---
 
-1. Terminalinizi açın ve projenin ana dizinine gidin.
-2. `cd nextjs-frontend` komutunu çalıştırarak önyüz projesinin dizinine gidin.
-3. `npm install` komutunu çalıştırın gerekli paketlerin yüklenmesini bekleyin.
-4. `npm run dev` komutunu çalıştırarak önyüz projesini başlatın.
-5. Tarayıcınızda `http://localhost:3000` adresine gidin.
+## Next.js
 
-Bu noktaya geldiyseniz harika! Artık projeyi kullanabilirsiniz. 🎉🎉🎉
+The Next.js project provides a simple frontend that allows users to view nearby restaurant recommendations and browse all available restaurants.
 
-Dokümanın ilerleyen kısımlarında API dokümantasyonu ve servis açıklamaları yer alıyor.
+### Running the Frontend
 
-# Kullanıcı Servisi - [User Service](user-service)
+1. Open a terminal and navigate to the root directory of the project.
+2. Run `cd nextjs-frontend` to enter the frontend directory.
+3. Run `npm install` and wait for dependencies to be installed.
+4. Run `npm run dev` to start the development server.
+5. Open your browser and go to `http://localhost:3000`.
 
-Kullanıcı modülü, kendine ait bir PostgreSQL veritabanı kullanarak kullanıcı verisiyle ilgili sorumluluklarını yerine getiren bir temel (foundational) mikroservistir.
+If you've made it this far — great! You're all set. 🎉🎉🎉
 
-Servis sınıfıyla mikroservislerin karışmaması adına onları ".java" olarak belirttim.
+---
 
-## UserService ([UserService.java](user-service/src/main/java/com/selimsahin/userservice/service/UserService.java))
+## User Service — [user-service](user-service)
 
-Kullanıcı servisi, kullanıcı yönetimi ile ilgilenir. Kullanıcı oluşturma ve silme ve güncelleme işlemlerini sağlar.
+The User Service is a foundational microservice responsible for user data management. It uses its own dedicated PostgreSQL database.
 
-### API Adresleri
+> Service class names are suffixed with `.java` to distinguish them from the microservices themselves.
 
-| Method | Adres                           | Açıklama                   |
-|--------|---------------------------------|----------------------------|
-| `GET`  | `user-service/api/v1/users`     | Kullanıcıları getir        |
-| `GET`  | `user-service/api/v1/users/{id}` | Kullanıcı id'si ile getir  |
-| `POST` | `user-service/api/v1/users`     | Yeni bir kullanıcı oluştur |
-| `PUT`  | `user-service/api/v1/users/{id}` | Kullanıcıyı güncelle       |
-| `DELETE`| `user-service/api/v1/users/{id}` | Kullanıcıyı sil            |
+### UserService ([UserService.java](user-service/src/main/java/com/selimsahin/userservice/service/UserService.java))
 
+Handles user management, including creation, update, and deletion operations.
 
-## UserReviewService ([UserReview.java](user-service/src/main/java/com/selimsahin/userservice/service/UserReviewService.java))
+#### API Endpoints
 
-Kullanıcı yorumları servisi, kullanıcıların restoranlar hakkında yaptığı yorumları yönetir. Kullanıcı yorumları oluşturma, silme ve güncelleme işlemlerini sağlar.
+| Method   | Path                              | Description             |
+|----------|-----------------------------------|-------------------------|
+| `GET`    | `user-service/api/v1/users`       | Get all users           |
+| `GET`    | `user-service/api/v1/users/{id}`  | Get user by ID          |
+| `POST`   | `user-service/api/v1/users`       | Create a new user       |
+| `PUT`    | `user-service/api/v1/users/{id}`  | Update a user           |
+| `DELETE` | `user-service/api/v1/users/{id}`  | Delete a user           |
 
-### API Adresleri
+### UserReviewService ([UserReviewService.java](user-service/src/main/java/com/selimsahin/userservice/service/UserReviewService.java))
 
-| Method | Adres                                                  | Açıklama                   |
-|--------|--------------------------------------------------------|----------------------------|
-| `GET`  | `user-service/api/v1/user-reviews`                     | Kullanıcı yorumlarını getir        |
-| `GET`  | `user-service/api/v1/user-reviews/{id}`                | Kullanıcı yorum id'si ile getir  |
-| `GET`  | `user-service/api/v1/user-reviews/by-user?userId={id}` | Kullanıcı id'si ile yorumları getir  |
-| `POST` | `user-service/api/v1/user-reviews`                     | Yeni bir kullanıcı yorumu oluştur |
+Manages user reviews for restaurants, including creation, update, and deletion.
 
+#### API Endpoints
 
+| Method | Path                                                     | Description                        |
+|--------|----------------------------------------------------------|------------------------------------|
+| `GET`  | `user-service/api/v1/user-reviews`                       | Get all user reviews               |
+| `GET`  | `user-service/api/v1/user-reviews/{id}`                  | Get a review by ID                 |
+| `GET`  | `user-service/api/v1/user-reviews/by-user?userId={id}`   | Get all reviews by a specific user |
+| `POST` | `user-service/api/v1/user-reviews`                       | Create a new user review           |
 
-# Restoran Servisi - [Restaurant Service](restaurant-service)
+---
 
-### API Adresleri
+## Restaurant Service — [restaurant-service](restaurant-service)
 
-| Method | Adres                                 | Açıklama                   |
-|--------|---------------------------------------|----------------------------|
-| `GET`  | `user-sevice/api/v1/restaurants`      | Restoranları getir         |
-| `GET`  | `user-sevice/api/v1/restaurants/{id}` | Restoran id'si ile getir  |
-| `POST` | `user-sevice/api/v1/restaurants`      | Yeni bir restoran oluştur  |
-| `DELETE`| `user-sevice/api/v1/restaurants/{id}` | Restoranı sil            |
+### API Endpoints
 
+| Method   | Path                                      | Description              |
+|----------|-------------------------------------------|--------------------------|
+| `GET`    | `restaurant-service/api/v1/restaurants`       | Get all restaurants      |
+| `GET`    | `restaurant-service/api/v1/restaurants/{id}`  | Get a restaurant by ID   |
+| `POST`   | `restaurant-service/api/v1/restaurants`       | Create a new restaurant  |
+| `DELETE` | `restaurant-service/api/v1/restaurants/{id}`  | Delete a restaurant      |
 
+---
 
-# Öneri Servisi - [Recommendation Service](recommendation-service)
+## Recommendation Service — [recommendation-service](recommendation-service)
 
-Öneri servisi, kullanıcıların restoranlar hakkında yaptığı yorumları ve konumlarını kullanarak restoran önerileri sunar. Bu önerileri sunarken Apache Solr kullanır.
+The Recommendation Service provides restaurant suggestions based on user reviews and location data, powered by Apache Solr.
 
-### API Adresleri
+### API Endpoints
 
-| Method | Adres                                                                         | Açıklama                                            |
-|--------|-------------------------------------------------------------------------------|-----------------------------------------------------|
-| `GET`  | `recommendation-service/api/v1/search/restaurants`                            | Solr'daki tüm restoranları getir                    |
-| `GET`  | `/api/v1/search/restaurants/by-location-near?location={latitude},{longitude}` | Belirtilen konuma yakın en fazla üç restoranı getir |
+| Method | Path                                                                            | Description                                          |
+|--------|---------------------------------------------------------------------------------|------------------------------------------------------|
+| `GET`  | `recommendation-service/api/v1/search/restaurants`                              | Get all restaurants indexed in Solr                  |
+| `GET`  | `/api/v1/search/restaurants/by-location-near?location={latitude},{longitude}`   | Get up to three nearby restaurants at a given location |
 
+---
 
-# Log Toplama Servisi - [Log Aggregation Service](log-aggregation-service)
+## Log Aggregation Service — [log-aggregation-service](log-aggregation-service)
 
-Log toplama servisi, diğer mikroservislerden üretilen hata ve bilgi loglarını toplar ve MongoDB veritabanına kaydeder.
-Bunlara erişmek için bir API sunar. MongoDB veritabanınızı yönetmek için projede Mongo Express de bulunuyor.
-Detaylı bilgi almak için [Mongo Express](#mongo-express) bölümüne bakınız.
+This service collects error and info logs produced by other microservices and stores them in a MongoDB database. A REST API is provided to access the stored logs. The project also includes Mongo Express for managing the MongoDB database — see [Mongo Express](#mongo-express).
 
-### API Adresleri
+### API Endpoints
 
-| Method | Adres                                      | Açıklama              |
-|--------|--------------------------------------------|-----------------------|
-| `GET`  | `log-aggregation-service/api/v1/info-logs` | Bilgi loglarını getir |
-| `GET`  | `log-aggregation-service/api/v1/error-logs`| Hata loglarını getir  |
+| Method | Path                                          | Description          |
+|--------|-----------------------------------------------|----------------------|
+| `GET`  | `log-aggregation-service/api/v1/info-logs`    | Get all info logs    |
+| `GET`  | `log-aggregation-service/api/v1/error-logs`   | Get all error logs   |
 
+---
 
+## API Gateway — [api-gateway](api-gateway)
 
-# API Gateway - [API Gateway](api-gateway)
+The API Gateway exposes all microservice APIs through a single unified entry point and resolves service addresses dynamically via Eureka.
 
-API Gateway, diğer mikroservislerin API'lerini tek bir noktadan erişilebilir hale getirir. Ayrıca servislerin bulunduğu adresleri Eureka üzerinden alır.
+---
 
-# Eureka Sunucusu - [Eureka Server](eureka-server)
+## Eureka Server — [eureka-server](eureka-server)
 
-Eureka sunucusu, diğer mikroservislerin kayıt olduğu ve bulunduğu adresleri tutan bir servistir. API Gateway, Eureka üzerinden diğer servislerin adreslerini alır.
+The Eureka Server acts as a service registry where all microservices register themselves. The API Gateway uses Eureka to discover and route requests to the appropriate services.
 
+---
 
 ## Mongo Express
 
-MongoDB veritabanınızı yönetmek için kullanabileceğiniz bir web tabanlı arayüzdür.
+Mongo Express is a web-based UI for managing the MongoDB database included in this project.
 
-## Mongo Express arayüzü ve kullanımı
+### Accessing Mongo Express
 
-1. Docker projeniz ayaktayken tarayıcınızda `http://localhost:8081` adresine gidin.
-2. Varsayılan kullanıcı adı ve parola `admin` : `pass` şeklindedir.
-3. MongoDB veritabanınızı seçin ve yönetmeye başlayın.
+1. With Docker running, open your browser and go to `http://localhost:8081`.
+2. Default credentials: username `admin`, password `pass`.
+3. Select your MongoDB database and start managing it.
 
-## Projenin Önyüzü
+---
 
-### "Near to you" Sayfası
-Bu sayfada kullanıcılar, yakınlarında bulunan ve ortalama puanı en yüksek olan üç restoranı görebilirler.
+## Frontend Screens
 
-![Restaurant recommendations](images/near-to-you.png)
+### "Near to You" Page
+Users can see the top three highest-rated restaurants closest to their location.
 
-### "Discover all" Sayfası
-Bu sayfasda, kullanıcıların var olan tüm restoranları keşfedebilecekleri bir liste bulunur.
+![Restaurant Recommendations](images/near-to-you.png)
 
-![Discover all restaurants](images/discover-all.png)
+### "Discover All" Page
+Users can browse the full list of available restaurants.
 
-### "Registration" Sayfası
-İçimizi ısıtan bir register sayfası...
+![Discover All Restaurants](images/discover-all.png)
 
-![Registration page](images/registration.png)
+### "Registration" Page
+A warm and welcoming registration screen.
 
-<br>
+![Registration Page](images/registration.png)
 
-## n11 x Patika.dev TalentHub Bootcamp
+---
 
-LinkedIn: [Selim Şahin](https://www.linkedin.com/in/selim-sahin/)<br>
-LeetCode: [selimsahin](https://leetcode.com/selimsahin/)<br>
-GitHub: [selimsahindev](https://github.com/selimsahindev)<br>
-Email: [selimsahin.sns@gmail.com](mailto:selimsahin.sns@gmail.com)
+## n11 × Patika.dev TalentHub Bootcamp
+
+LinkedIn: [Selim Sahin](https://www.linkedin.com/in/selim-sahin/)  
+GitHub: [selimsahindev](https://github.com/selimsahindev/)
